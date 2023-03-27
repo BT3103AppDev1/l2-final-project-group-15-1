@@ -1,25 +1,18 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-import { initializeApp } from 'firebase/app';
-
-// const firebaseConfig = {
-//     apiKey: "AIzaSyD2rU9dvKrLHOqe-ktcX-DU6eIaP5DTAkQ",
-//     authDomain: "democpp-c7ea7.firebaseapp.com",
-//     projectId: "democpp-c7ea7",
-//     storageBucket: "democpp-c7ea7.appspot.com",
-//     messagingSenderId: "676787835170",
-//     appId: "1:676787835170:web:632a50f394aeaf58a4957b"
-// };
-
+// Your web app's Firebase configuration (now is david's, change to kent next time)
 const firebaseConfig = {
-    apiKey: "AIzaSyAho1fAUtwvR1Ovr24-F9YxUiiGAN56cHQ",
-    authDomain: "democpp-79be2.firebaseapp.com",
-    projectId: "democpp-79be2",
-    storageBucket: "democpp-79be2.appspot.com",
-    messagingSenderId: "141856234627",
-    appId: "1:141856234627:web:65c7fbe8faa1b9e1e88fb6",
-    measurementId: "G-7WSS7BNSNE",
+  apiKey: "AIzaSyDhMNuxoFwnb2P8j3ZOrAVzN0sUew_HNlw",
+  authDomain: "democppvue-3cdd7.firebaseapp.com",
+  projectId: "democppvue-3cdd7",
+  storageBucket: "democppvue-3cdd7.appspot.com",
+  messagingSenderId: "319797063750",
+  appId: "1:319797063750:web:5bfde9d840de3fad135a47"
 };
 
+// Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-export default firebaseApp;
 
