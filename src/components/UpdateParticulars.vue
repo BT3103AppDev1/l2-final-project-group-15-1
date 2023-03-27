@@ -5,9 +5,13 @@
         <label for="fullName">Full Name:</label>
         <input type="text" id="fullName" placeholder="Full Name" v-model="fullName">
         <label for="dob">Date of Birth:</label>
-        <input type="text" id="dob" placeholder="Date of Birth DD/MM/YY" v-model="dob">
+        <input type="date" id="dob" placeholder="Date of Birth DD/MM/YY" v-model="dob">
         <label for="gender">Gender:</label>
-        <input type="text" id="gender" placeholder="Male/Female/Other" v-model="gender">
+        <select id="gender" name="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
         <label for="height">Height:</label>
         <input type="text" id="height" placeholder="Height in CM" v-model="height">
         <label for="weight">Weight:</label>
@@ -83,7 +87,8 @@
   
   label {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 15px;
+    margin: px 2;
   }
   
   input {
@@ -91,6 +96,7 @@
     border-radius: 5px;
     border: 1px solid #ccc;
     margin-bottom: 20px;
+    margin: 12px 0;
   }
   
   button {
@@ -125,5 +131,14 @@
   background-color: rgb(24, 144, 24);
   color: #ffffff;
   cursor: pointer;
+  }
+  select {
+      width: 100%;
+      padding: 8px 8px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
   }
 </style>
