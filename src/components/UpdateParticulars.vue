@@ -38,7 +38,7 @@
     },
     methods: {
     goToHomePage() {
-        this.$router.push('/')
+        this.$router.push('/home')
     },
     updateParticulars() { // edit firebase field names accordingly
       const user = firebase.auth().currentUser;
@@ -54,7 +54,7 @@
         .then(() => {
           window.alert('Particulars updated successfully!');
           // Redirect to home page after updating particulars
-          this.$router.push('/');
+          this.$router.push('/home');
         })
         .catch((error) => {
           console.error('Error updating particulars: ', error);
