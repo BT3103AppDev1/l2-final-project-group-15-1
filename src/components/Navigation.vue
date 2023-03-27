@@ -17,7 +17,7 @@
         <h1 class="navigation-text">{{ PillPal }}</h1>
         <div class="navigation-quick-actions">
           <router-link to="/home" class="link">Log in</router-link>
-          <router-link to="/home" class="navigation-navlink">
+          <router-link to="/register" class="navigation-navlink">
             <div class="navigation-sign-up-btn">
               <span class="navigation-sign-up">
                 <span>Register</span>
