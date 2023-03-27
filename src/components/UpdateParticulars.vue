@@ -38,7 +38,7 @@
     },
     methods: {
     goToHomePage() {
-        this.$router.push('/')
+        this.$router.push('/home')
     },
     updateParticulars() { // edit firebase field names accordingly
       const user = firebase.auth().currentUser;
