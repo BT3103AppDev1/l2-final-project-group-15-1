@@ -16,6 +16,9 @@
         <li>
           <router-link to="/analytics">Patient Analytics</router-link>
         </li>
+        <li>
+          <router-link to="/particulars">Update Particulars</router-link>
+        </li>
       </ul>
     </nav>
 </template>
