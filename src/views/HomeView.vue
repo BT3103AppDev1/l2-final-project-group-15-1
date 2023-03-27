@@ -121,8 +121,8 @@ export default {
   components: {
     AppNavigation,
     AppButton,
-    AppFooter,
-  },
+    AppFooter
+},
 }
 </script>
 
