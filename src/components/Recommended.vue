@@ -25,7 +25,7 @@ export default {
             const docRef = doc(db, "PillPal", USERID)
             const docSnap = await getDoc(docRef)
             let data = docSnap.data()
-            let height = (data.Height)
+            let height = (data.Height) / 100
             let weight = (data.Weight)
             let age = (data.Age)
             let bmi = weight / (height * height)
@@ -63,18 +63,18 @@ h1 {
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
 }
 .screenings{
     background-color: rgb(132, 241, 132);
-    border-radius: 5px;
+    border-radius: 20px;
     border-width: 3px;
     border-color: black;
     border-style: solid;
     width: 50%;
     text-align: center;
     margin: 50px auto 50px auto;
-    
 }
 </style>
