@@ -5,6 +5,7 @@ import Register from "../views/Register.vue"
 import ForgotPassword from "../views/ForgotPassword.vue"
 import HomePage from "../views/HomePage.vue"
 import ReminderConfigPage from "../views/ReminderConfigPage.vue"
+import UpdateParticularsPage from '../views/UpdateParticularsPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,14 @@ const router = createRouter({
       component: ReminderConfigPage,
       meta: {
         title:"Reminder Configuration Page",
+      },
+    },
+    {
+      path: '/particulars',
+      name: 'UpdateParticularsPage',
+      component: UpdateParticularsPage,
+      meta: {
+        title:"Update Particulars Page",
       },
     },
   ]

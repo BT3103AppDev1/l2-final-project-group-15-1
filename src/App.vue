@@ -14,12 +14,16 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <script>
 import Navigation from "./components/Navigation.vue";
+import UpdateParticulars from './components/UpdateParticulars.vue';
+
 export default {
   name: 'app',
   components: {
     Navigation,
+    UpdateParticulars,
   },
 };
+
 </script>
 
 <style lang="scss">
