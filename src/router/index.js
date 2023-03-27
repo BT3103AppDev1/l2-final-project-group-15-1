@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import Login from "../views/Login.vue"
 import Register from "../views/Register.vue"
 import ForgotPassword from "../views/ForgotPassword.vue"
+import HomePage from "../views/HomePage.vue"
+import ReminderConfigPage from "../views/ReminderConfigPage.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +36,22 @@ const router = createRouter({
       component: ForgotPassword,
       meta: {
         title:"Forgot Password",
+      },
+    },
+    {
+      path: '/home',
+      name: 'HomePage',
+      component: HomePage,
+      meta: {
+        title:"Home Page",
+      },
+    },
+    {
+      path: '/overview',
+      name: 'ReminderConfigPage',
+      component: ReminderConfigPage,
+      meta: {
+        title:"Reminder Configuration Page",
       },
     },
   ]
