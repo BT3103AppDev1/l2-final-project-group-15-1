@@ -122,14 +122,15 @@ export default {
                 Dosage: dosage,
                 Frequency: frequency,
                 Reminders: reminders,
-                Taken: []
+                Taken: {}
             }   
 
             try {
-                const docRef = await setDoc(doc(db, "PillPal", userId, "MedicationRegime", medication), newMedication)
+                const docRef = setDoc(doc(db, "PillPal", userId, "MedicationRegime", medication), newMedication)
                 console.log(docRef)
-                // document.getElementById("myform").reset();
+                document.getElementById("myform").reset();
                 // this.$emit("added")
+                location.reload()
             } catch(error) {
                 console.error(error)
             }

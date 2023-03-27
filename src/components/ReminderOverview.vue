@@ -59,6 +59,9 @@ export default {
             let index = 1
             let table = document.getElementById("table")
             
+            if (!allDocuments.empty) {
+
+                // console.log(allDocuments)
 
             allDocuments.forEach((docs) => {
 
@@ -70,33 +73,41 @@ export default {
                 let dosage = (documentData.Dosage)
                 let frequency = (documentData.Frequency)
                 let reminders = (documentData.Reminders)    
-                let taken = (documentData.Taken)     
+                let taken = (documentData.Taken)   
+                
+                // console.log(taken)
                 
                 var numberOfDosesTaken = taken.length
 
-                if (numberOfDosesTaken > 0 ) {
+                // console.log(numberOfDosesTaken)
+
+                var checkbox = false
+
+                // setTimeout(function() { alert("Reminder to take: " + medication); }, 1000);
+
+                if (numberOfDosesTaken > 0) {
                     
-                    var lastTaken = new Date(taken[-1])
+                    var lastTaken = taken[taken.length - 1].toDate()
+
+                    // console.log(numberOfDosesTaken)
                     var today = new Date();
                     var timeFromLastDose = (today.getHours() - lastTaken.getHours()) * 60 + (today.getMinutes() - lastTaken.getMinutes()) 
                     
                     var minTimeBetweenDoses = Number.MAX_SAFE_INTEGER
 
                     
-                   
                     var hoursBetweenDoses = parseInt(reminders.split(":")[0])
                     var minutesBetweenDoses = parseInt(reminders.split(":")[1])
 
                     var timeBetweenDoses = hoursBetweenDoses * 60 + minutesBetweenDoses
+
                     
                     if (timeBetweenDoses < minTimeBetweenDoses) {
                         var minTimeBetweenDoses = timeBetweenDoses
                     }
-                        
-                    
-                    
 
-                    var checkbox = false
+
+                    // var checkbox = false
                     
                     if (timeFromLastDose < minTimeBetweenDoses) {
                         checkbox = true
@@ -130,17 +141,27 @@ export default {
                 } else {
                     takenButton.innerHTML = "Take Medication Now"
                     cell5.appendChild(takenButton)
+                    if (taken.length > 0) {
+                        taken.push(Timestamp.fromDate(new Date()))
+                    } else {
+                        taken = new Array(Timestamp.fromDate(new Date()))
+                    }
+                    
                     takenButton.onclick = async function() {
+
                         let takeMedication = { 
                             Medication: medication,
                             Dosage: dosage,
                             Frequency: frequency,
                             Reminders: reminders,
-                            Taken: Timestamp.fromDate(new Date()) 
+                            Taken: taken
                         }
 
-
+                      
                         const docRef = await setDoc(doc(db, "PillPal", userId, "MedicationRegime", medication), takeMedication)
+                        alert("Medication has been taken at: " + new Date())
+                        location.reload()
+                        
                     }
                 }
                 
@@ -152,17 +173,19 @@ export default {
                 
 
                 cell6.appendChild(deleteButton)
-                deleteButton.onclick = async function() {
-                    alert("You are going to delete " + medication)
-                    await deleteDoc(doc(db,"PillPal", userId, "MedicationRegime", medication))
+                deleteButton.onclick = function() {
 
-                    console.log("Medication " + medication + " successfully deleted!")
+                    deleteMedication(medication)
+                    // alert("You are going to delete " + medication)
+                    // await deleteDoc(doc(db,"PillPal", userId, "MedicationRegime", medication))
 
-                    let tb = document.getElementById("table")
-                    while (tb.ariaRowSpan.length > 1) {
-                        tb.deleteRow(1)
-                    }
-                    readMedication();
+                    // console.log("Medication " + medication + " successfully deleted!")
+
+                    // let tb = document.getElementById("table")
+                    // while (tb.ariaRowSpan.length > 1) {
+                    //     tb.deleteRow(1)
+                    // }
+                    // readMedication();
                 }
 
                 // var f = '<input type="checkbox" onchange="checkboxToggle" id="complete" value="no">';
@@ -177,7 +200,11 @@ export default {
 
                 index += 1
             })
+
         }
+        }
+
+        
 
         readMedication(),
 
@@ -200,13 +227,13 @@ export default {
         }
 
         
-
+    }
 
 
        
     
   // your component logic here
-    }
+    
 }
 </script>
 
