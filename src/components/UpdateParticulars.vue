@@ -40,16 +40,16 @@
     goToHomePage() {
         this.$router.push('/')
     },
-    updateParticulars() { // edit function field names accordingly
+    updateParticulars() { // edit firebase field names accordingly
       const user = firebase.auth().currentUser;
       if (user) {
         const db = firebase.firestore();
         db.collection('PillPal').doc(user.uid).update({
-          Name: this.name,
-          Date_of_Birth: this.dob,
-          Gender: this.gender,
-          Height: this.height,
-          Weight: this.weight,
+          'Name': this.fullName,
+          'Date.of.Birth': this.dob,
+          'Gender': this.gender,
+          'Height': this.height,
+          'Weight': this.weight,
         })
         .then(() => {
           window.alert('Particulars updated successfully!');
