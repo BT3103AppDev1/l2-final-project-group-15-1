@@ -14,8 +14,10 @@
  
      data() {
          return {
-             email: null,
-             password: null,
+            email: "",
+            handphonenumber: null,
+            password: "",
+            reconfirmpassword: ""
          };
      }
  }
