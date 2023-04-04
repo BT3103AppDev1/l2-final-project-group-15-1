@@ -1,36 +1,38 @@
 <template>
-  <div>
-    <!-- Display the user's name, reward points, and current rewards -->
-    <div v-if="user">
-      <h1>{{ user.name }}</h1>
-      <h3>Points: {{ user.points }}</h3>
-    </div>
+	<div class = box>
+		
+			<!-- Display the user's name, reward points, and current rewards -->
+			<div v-if="user">
+				<h1>{{ user.name }}</h1>
+				<h3>Points: {{ user.points }}</h3>
+			</div>
 
-    <div>
-      <h1>Your Rewards</h1>
-      <ul v-if="user">
-        <li v-for="reward in user.rewards" :key="reward.id">{{ reward.name }}</li>
-      </ul>
-    </div>
-
-    <!-- Display the list of available rewards -->
-    <div>
-      <h3>Available Rewards</h3>
-      <div class="rewards">
-        <div v-for="reward in rewards" :key="reward.id">
-          <h2>{{ reward.name }}</h2>
-          <h3>Points: {{ reward.points }}</h3>
-          <button :disabled="reward.points >= user.points" @click="redeemReward(reward)">Redeem</button>
-        </div>
-      </div>
-    </div>
-  </div>
+			<div>
+				<h1>Your Rewards</h1>
+				<ul v-if="user">
+					<li v-for="reward in user.rewards" :key="reward.id">{{ reward.name }}</li>
+				</ul>
+			</div>
+	</div> <br><br>
+			<!-- Display the list of available rewards -->
+		<div>
+			<h3>Available Rewards</h3>
+			<div class="rewards">
+				<div v-for="reward in rewards" :key="reward.id">
+					<h2>{{ reward.name }}</h2>
+					<h3>Points: {{ reward.points }}</h3>
+					<button :disabled="reward.points >= user.points" @click="redeemReward(reward)">Redeem</button>
+				</div>
+			</div>
+		</div>
+	
+	
 </template>
 
 <script>
 import firebaseApp from '../firebase.js';
-import { getFirestore } from "firebase/firestore"
-import { collection, getDoc, doc, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { increment, arrayUnion,collection, getDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 
 export default {
   data() {
@@ -77,22 +79,30 @@ export default {
     },
 
     // Redeem a reward
-    redeemReward(reward) {
+    async redeemReward(reward) {
       // Update Firestore to deduct the reward points and add the redeemed reward
       const db = getFirestore(firebaseApp);
       const USERID = "johndoe@gmail.com";
       
-      doc(db, "PillPal", USERID).update({
-          Reward_Points: firebase.firestore.FieldValue.increment(-reward.points),
-          Rewards: firebase.firestore.FieldValue.arrayUnion(reward),
+      await updateDoc(doc(db, "PillPal", USERID), {
+          Reward_Points: increment(-reward.points),
+          Rewards: arrayUnion(reward),
         })
-        .then(() => {
-          // Update the user's data in the component
-          this.user.points -= reward.points;
-          this.user.rewards.push(reward);
-        });
+        
+        // Update the user's data in the component
+        this.user.points -= reward.points;
+        this.user.rewards.push(reward);
+        
     },
   },
 };
 </script>
+
+<style scoped>
+.box {
+	display:flex;
+	flex-direction: row;
+	justify-content:space-between;
+}
+</style>
   
