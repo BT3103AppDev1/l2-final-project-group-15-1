@@ -8,6 +8,8 @@
                 <th>Reward Points:</th>
             </tr>
         </table>
+        <br>
+        <button id = "update_particulars_button" v-on:click="editParticulars">Update Particulars</button>
     </div>
 </template>
 
@@ -20,6 +22,11 @@ const db = getFirestore(firebaseApp);
 const USERID = "johndoe@gmail.com"
 
 export default {
+    methods: {
+        editParticulars() {
+            this.$router.push('/particulars')
+        }
+    },
     mounted() {
         async function display() {
             let index = 1
@@ -98,6 +105,12 @@ table {
     width: 30%;
     text-align: center;
     margin: 50px auto 50px auto;
+}
+
+#update_particulars_button{
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 3px;
 }
 
 </style>
