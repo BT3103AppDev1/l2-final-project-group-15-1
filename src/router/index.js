@@ -8,7 +8,9 @@ import ReminderConfigPage from "../views/ReminderConfigPage.vue"
 import UpdateParticularsPage from '../views/UpdateParticularsPage.vue';
 import ScreeningsPage from '../views/ScreeningsPage.vue';
 import RewardsPage from '../views/RewardsPage.vue';
+import AdminHomePage from '../views/AdminHomePage.vue';
 import PatientAnalyticsPage from '../views/PatientAnalyticsPage.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -83,7 +85,14 @@ const router = createRouter({
         title:"Reward Points Page",
       }
     },
-
+    {
+      path: '/admin',
+      name: 'AdminPage',
+      component: AdminHomePage,
+      meta: {
+        title:"Admin Home Page", // restrict to admin access? meta: { requiresAuth: true, isAdmin: true }
+      }
+    },
     {
       path: '/analytics',
       name: 'PatientAnalyticsPage',
