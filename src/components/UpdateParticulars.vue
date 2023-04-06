@@ -17,6 +17,8 @@
         <input type="number" id="height" placeholder="Height in CM" v-model="height" min="0">
         <label for="weight">Weight:</label>
         <input type="number" id="weight" placeholder="Weight in KG" v-model="weight" min="0">
+        <label for="medicalCondition">Medical Conditions:</label>
+        <input type="text" id="medicalCondition" placeholder="Medical Conditions" v-model="medicalCondition">
         <div class="button-container">
           <button class="return-button" @click.prevent="goToHomePage()">Return to Home Page</button>
           <!-- <button class="update-button" @click.prevent="updateParticulars()">Update Particulars</button> -->
@@ -67,6 +69,7 @@ import { getAuth } from "firebase/auth";
           if (this.gender) updatedValues.Gender = this.gender;
           if (this.height) updatedValues.Height = this.height;
           if (this.weight) updatedValues.Weight = this.weight;
+          if (this.medicalCondition) updatedValues.Medical_Conditions = this.medicalCondition;
 
           await updateDoc(userRef, updatedValues)
 
