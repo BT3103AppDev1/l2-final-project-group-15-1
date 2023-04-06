@@ -208,10 +208,10 @@ export default {
 
         readMedication(),
 
-        // async function takeMedication(medication) {
-        //     let takeMedication = { Taken: admin.firestore.TimeStamp.fromDate(new Date()) }
-        //     const docRef = await setDoc(doc(db, "PillPal", userId, "MedicationRegime", medication), takeMedication)
-        // }
+        async function takeMedication(medication) {
+            let takeMedication = { Taken: admin.firestore.TimeStamp.fromDate(new Date()) }
+            const docRef = await setDoc(doc(db, "PillPal", userId, "MedicationRegime", medication), takeMedication)
+        }
 
         async function deleteMedication(medication) {
             alert("You are going to delete " + medication)
@@ -220,7 +220,7 @@ export default {
             console.log("Medication " + medication + " successfully deleted!")
 
             let tb = document.getElementById("table")
-            while (tb.ariaRowSpan.length > 1) {
+            while (tb.rows.length > 1) {
                 tb.deleteRow(1)
             }
             readMedication();
