@@ -104,12 +104,12 @@ export default {
 
                         // alert('In creating stage')
                         const createdUser = await createUserWithEmailAndPassword(auth, this.email, this.password)
-                        db.collection('PillPal').doc(user.uid).update(
-                        // const docRef = await setDoc(doc(db, "PillPal", this.email), {
-                        //     name: this.name,
-                        //     email: this.email,
-                        //     handphone: this.handphonenumber
-                        // })
+                        db.collection('PillPal').doc(user.uid).update()
+                        const docRef = await setDoc(doc(db, "PillPal", this.email), {
+                            name: this.name,
+                            email: this.email,
+                            handphone: this.handphonenumber
+                        })
                         alert('Created')
                         this.$router.push({ name: 'Login' })
                         return
