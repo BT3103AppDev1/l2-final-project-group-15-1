@@ -1,0 +1,131 @@
+<template>
+    <div>
+      <calendar-heatmap  :values = "heatmapData" :end-date= "new Date()" :round="5" :max="10" />
+    </div>
+  </template>
+  
+
+<script>
+
+    import firebaseApp from '../firebase.js';
+    import { getFirestore } from "firebase/firestore";
+    import { collection, getDocs, getDoc, doc, deleteDoc, query, where, setDoc } from "firebase/firestore";
+    import { Timestamp } from 'firebase/firestore'
+
+    import { CalendarHeatmap } from 'vue3-calendar-heatmap'
+
+    const db = getFirestore(firebaseApp);
+    const userId = 'johndoe@gmail.com';
+
+
+    export default {
+        name: "TakeMedicationHeatMap",
+        components: {
+            CalendarHeatmap,
+        },
+
+        data() {
+            return {
+                heatmapData: [],
+            }
+        },
+
+        mounted() {
+            this.fetchHeatmapData();
+        },
+
+        methods: {
+
+            async fetchHeatmapData() {
+                
+                const allDocuments = await getDocs(collection(db, "PillPal", userId, "MedicationRegime"))
+
+                var dict = {};
+                var heatmapData = new Array(dictLen);
+
+                if (!allDocuments.empty) {
+
+                    // console.log(allDocuments)
+
+                    allDocuments.forEach((docs) => {
+
+                    
+                        let documentData = docs.data()
+
+                        let medication = (documentData.Medication)
+                        let dosage = (documentData.Dosage)
+                        let frequency = (documentData.Frequency)
+                        let reminders = (documentData.Reminders)    
+                        let taken = (documentData.Taken)   
+
+                        for (var i = 0; i < taken.length; i++) {
+                            var timestamp = taken[i].toDate();
+
+                            console.log(timestamp)
+
+                            
+
+                            let day = timestamp.getDate();
+                            let month = timestamp.getMonth() + 1;
+                            let year = timestamp.getFullYear();
+
+                            // This arrangement can be altered based on how we want the date's format to appear.
+                            let date = `${year}-${month}-${day}`;
+                            console.log(date); 
+
+
+                            // heatmapData[row] = heatmapData[row] || Array.from({ length: 24 }, () => 0);
+                            // heatmapData[row][col]++;
+                            
+
+                            if (date in dict) {
+                                dict[date] += 1;
+                            } else {
+                                dict[date] = 1;
+                            }
+
+                            
+                        }
+
+                    })
+
+                    console.log(dict)
+
+                    var dictLen = Object.keys(dict).length
+
+                    var counter = 0;
+
+                    for (const [key, value] of Object.entries(dict)) {
+                        heatmapData[counter] = {date : key, count : value}
+                        counter += 1;
+
+                    }
+
+                }
+
+                console.log(heatmapData)
+                this.heatmapData = heatmapData;
+                console.log(this.heatmapData)
+                
+            }
+
+            
+        },
+    
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

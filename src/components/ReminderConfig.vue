@@ -1,6 +1,6 @@
 <template>
     <div class ="container">
-        <form id="myform">
+        <form id="myform" onsubmit="return false">
             <h2>Add/Edit Medication</h2>
 
             <div class = "formli">
@@ -108,7 +108,35 @@ export default {
 
         // readMedication(),
 
+        checkInputFormat() {
+            let medication = document.getElementById("medication").value
+            let dosage = document.getElementById("dosage").value
+            let frequency = document.getElementById("frequency").value
+            let reminders = document.getElementById("reminders").value
+
+            if (medication == "") {
+                return "Please input medication name into Medication field."
+            } else if (dosage == "") {
+                return "Please input dosage."
+            } else if (frequency == "") {
+                return "Please input dosage frequency."
+            } else if (/^([0-9][0-9]:[0-5][0-9])$/.test(reminders) == false) {
+                return "Please input time between each dose in HH:MM format"
+            } else {
+                return ""
+            }
+            
+        },
+
         async editMedication() {
+
+            var errorMessage = this.checkInputFormat()
+            console.log(errorMessage)
+
+            if (errorMessage != "") {
+                alert(errorMessage)
+                return
+            }
 
             let medication = document.getElementById("medication").value
             let dosage = document.getElementById("dosage").value
@@ -126,29 +154,25 @@ export default {
             }   
 
             try {
-                const docRef = setDoc(doc(db, "PillPal", userId, "MedicationRegime", medication), newMedication)
+                const docRef = await setDoc(doc(db, "PillPal", userId, "MedicationRegime", medication), newMedication)
+                
+                // console.log(typeof docRef)
                 console.log(docRef)
-                document.getElementById("myform").reset();
+                // document.getElementById("myform").reset();
                 // this.$emit("added")
-                location.reload()
+                // location.reload()
             } catch(error) {
                 console.error(error)
             }
 
-            
-            
-            // try {
-            //     const docRef = await setDoc(doc(db, "PillPal", userId, "MedicationRegime", "Ibuprofen"), newMedication)
+            this.pageReload()
+        },
 
-            // } catch(error) {
-            //     console.error(error)
-            // }
+        async pageReload() {
+            location.reload()
+        },
 
-            // readMedication()
-            
-
-        // medicationRef.push(newMedication)
-        }
+        
     }
   // your component logic here
 }

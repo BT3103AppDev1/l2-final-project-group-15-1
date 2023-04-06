@@ -8,6 +8,7 @@ import ReminderConfigPage from "../views/ReminderConfigPage.vue"
 import UpdateParticularsPage from '../views/UpdateParticularsPage.vue';
 import ScreeningsPage from '../views/ScreeningsPage.vue';
 import RewardsPage from '../views/RewardsPage.vue';
+import PatientAnalyticsPage from '../views/PatientAnalyticsPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -80,6 +81,15 @@ const router = createRouter({
       component: RewardsPage,
       meta: {
         title:"Reward Points Page",
+      }
+    },
+
+    {
+      path: '/analytics',
+      name: 'PatientAnalyticsPage',
+      component: PatientAnalyticsPage,
+      meta: {
+        title:"Patient Analytics Page",
       }
     },
   ]
