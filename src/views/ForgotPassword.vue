@@ -4,18 +4,30 @@
         <Modal v-if="modalActive" :modalMessage="modalMessage" @close-modal="closeModal" />
         <div class="form-wrap">
             <form class="reset">
+
                 <p class="login-register">
                     Already have an account?
                     <router-link class="router-link" :to="{ name: 'Login' }">Login</router-link>
                 </p>
+
                 <h2>Reset Password</h2>
+
                 <p>Forgot your password? Enter your email to reset it</p>
+
                 <div class="inputs">
+
                     <div class="input">
                         <input type="text" placeholder="Email" v-model="email" />
                     </div>
+
                 </div>
+
+                <br>
+
+                <br>
+
                 <button @click.prevent="resetPassword"> Reset </button>
+
             </form>
         </div>
     </div>
@@ -61,6 +73,19 @@ export default {
 </script>
   
 <style lang="scss" scoped>
+.input {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+}
+
+form {
+    text-align: center;
+    align-items: center;
+    margin: auto;
+}
+
 .reset-password {
     position: relative;
 
