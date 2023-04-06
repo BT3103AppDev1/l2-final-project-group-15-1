@@ -1,30 +1,37 @@
 <template>
     <div class="update-particulars-container"><br><br>
       <h1 class="update-particulars-heading">Update Particulars</h1><br>
-      <form class="update-particulars-form">
+      <form class="update-particulars-form" @submit.prevent="updateParticulars">
         <label for="fullName">Full Name:</label>
         <input type="text" id="fullName" placeholder="Full Name" v-model="fullName">
         <label for="dob">Date of Birth:</label>
         <input type="date" id="dob" placeholder="Date of Birth DD/MM/YY" v-model="dob">
         <label for="gender">Gender:</label>
-        <select id="gender" name="gender" required>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
+        <select id="gender" name="gender" v-model="gender">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
         </select>
         <label for="height">Height:</label>
-        <input type="text" id="height" placeholder="Height in CM" v-model="height">
+        <input type="number" id="height" placeholder="Height in CM" v-model="height" min="0">
         <label for="weight">Weight:</label>
-        <input type="text" id="weight" placeholder="Weight in KG" v-model="weight">
+        <input type="number" id="weight" placeholder="Weight in KG" v-model="weight" min="0">
         <div class="button-container">
           <button class="return-button" @click.prevent="goToHomePage()">Return to Home Page</button>
-          <button class="update-button" @click.prevent="updateParticulars()">Update Particulars</button>
+          <!-- <button class="update-button" @click.prevent="updateParticulars()">Update Particulars</button> -->
+          <button class="update-button" type="submit">Update Particulars</button>
         </div>
       </form>
     </div>
 </template>
   
 <script>
+import firebaseApp from '../firebase.js';
+import { getFirestore } from "firebase/firestore";
+import { increment, arrayUnion,collection, getDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
   export default {
     name: 'UpdateParticulars',
     data() {
@@ -36,21 +43,33 @@
         weight: '',
       }
     },
+
     methods: {
     goToHomePage() {
         this.$router.push('/home')
     },
-    updateParticulars() { // edit firebase field names accordingly
-      const user = firebase.auth().currentUser;
-      if (user) {
-        const db = firebase.firestore();
-        db.collection('PillPal').doc(user.uid).update({
-          'Name': this.fullName,
-          'Date.of.Birth': this.dob,
-          'Gender': this.gender,
-          'Height': this.height,
-          'Weight': this.weight,
-        })
+
+    async updateParticulars() {
+        const auth = getAuth(firebaseApp);
+        const user = auth.currentUser;
+
+        if (user) {
+          // const userId = user.uid;
+          // right now can only access the document ID "johndoe@gmail.com" in the PillPal collection
+          // need to change this document ID to be the unique identifier of the currently logged-in user
+          const userId = "johndoe@gmail.com"
+          const db = getFirestore(firebaseApp);
+          const userRef = doc(db, "PillPal", userId);
+          
+          const updatedValues = {};
+          if (this.fullName) updatedValues.Name = this.fullName;
+          if (this.dob) updatedValues.Date_Of_Birth = this.dob;
+          if (this.gender) updatedValues.Gender = this.gender;
+          if (this.height) updatedValues.Height = this.height;
+          if (this.weight) updatedValues.Weight = this.weight;
+
+          await updateDoc(userRef, updatedValues)
+
         .then(() => {
           window.alert('Particulars updated successfully!');
           // Redirect to home page after updating particulars
@@ -60,7 +79,8 @@
           console.error('Error updating particulars: ', error);
         });
       } else {
-        console.log('No user is currently logged in.');
+        console.error('No user is currently logged in.');
+        window.alert('No user is currently logged in.');
       }
     }
   }

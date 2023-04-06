@@ -1,6 +1,7 @@
 <script>
     import HomeNav from '../components/HomeNav.vue'
     import HomeParticulars from '../components/HomeParticulars.vue';
+    import Appointments from '../components/Appointments.vue';
 
     export default {
 
@@ -8,6 +9,7 @@
         components: {
             HomeNav,
             HomeParticulars,
+            Appointments,
         }
     }
 
@@ -18,7 +20,7 @@
       <h1>Home View</h1>
       <HomeNav />
       <br><br>
-      <HomeParticulars />
+      <HomeParticulars /><Appointments />
       <!-- rest of the content -->
     </div>
 </template>
