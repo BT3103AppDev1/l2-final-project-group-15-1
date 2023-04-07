@@ -32,7 +32,7 @@
     </div>
   </template>
   
-  <script>
+<script>
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";

@@ -1,10 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="modal">
+
         <div class="modal-content">
-            <p> {{this.modalMessage}}</p>
+            <p> {{ this.modalMessage }}</p>
+
+            <br>
+
             <button @click="closeModal">Close</button>
         </div>
+
     </div>
     </template>
     
