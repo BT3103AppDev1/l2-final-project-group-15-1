@@ -56,13 +56,16 @@ export default {
 
     methods: {
         resetPassword() {
-            sendPasswordResetEmail(auth, this.email).then(() => {
-                this.modalMessage = "If your account exists, you will receive an email";
+
+            try {
+                sendPasswordResetEmail(auth, this.email)
+                this.modalMessage = "Recovery link sent to your email";
                 this.modalActive = true;
-            }).catch((err) => {
-                this.modalMessage = err.message;
+            } catch (err) {
+                this.modalMessage = "Email does not exist";
                 this.modalActive = true
-            })
+            }
+
         },
         closeModal() {
             this.modalActive = !this.modalActive;
