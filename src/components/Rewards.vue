@@ -80,7 +80,7 @@ export default {
         };
       }
 
-      const rewardsRef = collection(db, "PillPal", "AllRewards", "Rewards");
+      const rewardsRef = collection(db, "AllRewards");
       const querySnapshot = await getDocs(rewardsRef);
 
       querySnapshot.forEach((doc) => {
