@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import AppNavigation from '../components/Navigation.vue'
+import AppNavigation from '../components/AppNavigation.vue'
 import AppButton from '../components/Button.vue'
 import AppFooter from '../components/Footer.vue'
 

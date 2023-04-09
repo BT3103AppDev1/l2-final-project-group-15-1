@@ -20,7 +20,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
+import Navigation from "./components/AppNavigation.vue";
 import UpdateParticulars from './components/UpdateParticulars.vue';
 
 export default {

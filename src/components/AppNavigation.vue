@@ -26,7 +26,7 @@
   <script>
   
   export default {
-    name: 'Navigation',
+    name: 'AppNavigation',
     props: {
       PillPal: {
         type: String,
