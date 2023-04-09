@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <div class="box1">
-      <AppNavigation />
+      <LandingHeader />
       <div class="home-hero">
         <div class="box2">
           <h1 class="title">PillPal</h1>
@@ -11,7 +11,9 @@
             an integrated healthcare application for use by healthcare
             professionals and patients alike.
           </h2>
-          <AppButton button="Get Started"/>
+          <router-link to="/login" class="login">
+            <AppButton button="Get Started"/>
+          </router-link>
         </div>
         <div class="background"></div>
       </div>
@@ -109,7 +111,7 @@
 </template>
 
 <script>
-import AppNavigation from '../components/Navigation.vue'
+import LandingHeader from '../components/LandingHeader.vue'
 import AppButton from '../components/Button.vue'
 import AppFooter from '../components/Footer.vue'
 
@@ -117,7 +119,7 @@ export default {
   name: 'Home',
   props: {},
   components: {
-    AppNavigation,
+    LandingHeader,
     AppButton,
     AppFooter
 },
@@ -168,23 +170,21 @@ export default {
 .title {
   color: #ffffff;
   font-size: 3em;
-  margin-bottom: var(--dl-space-space-oneandhalfunits);
+  
 }
 .home-title {
   color: rgb(255, 255, 255);
   width: 792px;
   font-size: 2em;
-  font-style: normal;
   font-weight: 400;
   line-height: 50px;
 }
 .background {
-  gap: var(--dl-space-space-oneandhalfunits);
+  
   margin: auto;
   display: flex;
   overflow: hidden;
   position: absolute;
-  transform: rotate(-30deg);
   align-items: center;
   flex-direction: row;
   justify-content: center;
@@ -199,17 +199,15 @@ export default {
 .title1 {
   text-align: center;
   margin-bottom: 2%;
-  
+  margin-top:1%;
 }
 .features {
   width: 100%;
   height: 300px;
   display: flex;
   position: relative;
-  
   max-width: 100%;
   align-items: flex-start;
-  
   flex-direction: row;
   justify-content: space-evenly;
 }
@@ -230,10 +228,8 @@ export default {
   height: 50px;
 }
 .featureTitle {
-  font-style: normal;
   text-align: center;
   font-weight: 500;
-  
 }
 
 

@@ -20,14 +20,14 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
+
 import UpdateParticulars from './components/UpdateParticulars.vue';
 
 export default {
   name: 'app',
   methods: {
     showNav: function() {
-      return this.$route.path !== '/' && this.$route.path !== "/login" && this.$route.path !== "/register" && this.$route.path !== "/forgot-password"
+      return this.$route.path !== '/' && this.$route.path !== "/login" && this.$route.path !== "/register" && this.$route.path !== "/forgot-password" && this.$route.path !== "/admin"
     },
     goHome() {
             this.$router.push('/home')
@@ -54,47 +54,47 @@ body, html {
   width: 100%;
 }
 
-#header{
-  background-color: rgb(5, 214, 5);
-  padding: 10px;
-  color: white;
-}
+// #header{
+//   background-color: rgb(5, 214, 5);
+//   padding: 10px;
+//   color: white;
+// }
 
-#home_header{
-  cursor: pointer;
-  padding: 10px;
-}
+// #home_header{
+//   cursor: pointer;
+//   padding: 10px;
+// }
 
-.routing{
-  padding: 20px;
-  width:100%;
-}
+// .routing{
+//   padding: 20px;
+//   width:100%;
+// }
 
-#nav{
-  padding : 10px;
-}
+// #nav{
+//   padding : 10px;
+// }
 
-#nav a {
-  font-weight : bold;
-  text-align: center;
-  color: #2c3e50;
-  background-color: rgb(169, 248, 169);
-  margin: 20px;
-  border-radius: 2px;
-  border: 1px;
-  border-color: black;
-  border-style: solid;
-  padding: 5px;
-  display: inline-block;
-}
+// #nav a {
+//   font-weight : bold;
+//   text-align: center;
+//   color: #2c3e50;
+//   background-color: rgb(169, 248, 169);
+//   margin: 20px;
+//   border-radius: 2px;
+//   border: 1px;
+//   border-color: black;
+//   border-style: solid;
+//   padding: 5px;
+//   display: inline-block;
+// }
 
-#nav a.router-link-exact-active{
-  color: white;
-}
+// #nav a.router-link-exact-active{
+//   color: white;
+// }
 
-h1{
-  padding-top: 10px;
-}
+// h1{
+//   padding-top: 10px;
+// }
 </style>
 
 
