@@ -1,5 +1,5 @@
 <template>
-    <nav class="navigation-navbar" v-bind:class="rootClassName">
+    <nav class="navigation-navbar" >
       <div class="navigation-container">
         <svg viewBox="0 0 877.7142857142857 1024" class="facebook-icon">
           <path
@@ -42,7 +42,7 @@
     width: 100%;
     display: flex;
     position: relative;
-    max-width: 1200px;
+    
     padding-top: var(--dl-space-space-twounits);
     padding-left: var(--dl-space-space-unit);
     padding-right: var(--dl-space-space-unit);
@@ -141,7 +141,5 @@
     border: 1px solid #39bda7;
 }
   
-  .navigation-root-class-name {
-    max-width: 100%;
-  }
+
   </style>
