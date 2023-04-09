@@ -56,12 +56,13 @@ import { getAuth } from "firebase/auth";
         const user = auth.currentUser;
 
         if (user) {
-          // const userId = user.uid;
-          // right now can only access the document ID "johndoe@gmail.com" in the PillPal collection
-          // need to change this document ID to be the unique identifier of the currently logged-in user
-          const userId = "johndoe@gmail.com"
+          const userId = user.uid;
+          const userEmail = user.email;
+          // console.log("User ID:", userId);
+          // console.log("User Email:", userEmail);
+
           const db = getFirestore(firebaseApp);
-          const userRef = doc(db, "PillPal", userId);
+          const userRef = doc(db, "PillPal", userEmail);
           
           const updatedValues = {};
           if (this.fullName) updatedValues.Name = this.fullName;
@@ -80,6 +81,7 @@ import { getAuth } from "firebase/auth";
         })
         .catch((error) => {
           console.error('Error updating particulars: ', error);
+          window.alert('Error updating particulars');
         });
       } else {
         console.error('No user is currently logged in.');
