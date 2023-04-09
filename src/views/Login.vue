@@ -64,7 +64,7 @@ export default {
 </template>
   
 <script>
-import { signInWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword, getAuth, fetchSignInMethodsForEmail } from "firebase/auth";
 import firebaseApp from '@/firebase.js';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
@@ -74,13 +74,6 @@ export default {
 
     name: "Login",
     components: {},
-    mounted() {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                this.user = user;
-            }
-        })
-    },
     data() {
         return {
             email: null,
@@ -90,22 +83,29 @@ export default {
         }
     },
     methods: {
-        login() {
-
-            // created() {
-            //     setTimeout(() => {
-            //         this.errorMsg = null;
-            //     }, 5000); // clear error message after 5 seconds
-            // },
-
-            try {
-                signInWithEmailAndPassword(auth, this.email, this.password)
-                this.$router.push({ name: "HomePage" });
-                this.error = false;
-                this.errorMsg = "";
-            } catch (err) {
+        async login() {
+            if (this.email !== '' && this.password !== '') {
+                const numOfSignIn = await fetchSignInMethodsForEmail(auth, this.email)
+                const result = numOfSignIn
+                if (result.length === 0) {
+                    this.error = true;
+                    this.errorMsg = "User has not been registered"
+                } else {
+                    try {
+                        const signedUser = await signInWithEmailAndPassword(auth, this.email, this.password)
+                        const user = signedUser
+                        this.$router.push({ name: "HomePage" });
+                        document.getElementById('login').reset();
+                        this.error = false;
+                        this.errorMsg = "";
+                    } catch (err) {
+                        this.error = true;
+                        this.errorMsg = "Error logging in";
+                    }
+                }
+            } else {
                 this.error = true;
-                this.errorMsg = "Error logging in";
+                this.errorMsg = "Invalid Email Entered";
             }
         },
     },

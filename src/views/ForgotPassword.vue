@@ -35,8 +35,9 @@
   
 <script>
 import Modal from "../components/Modal.vue";
-import { sendPasswordResetEmail, getAuth } from "firebase/auth";
+import { sendPasswordResetEmail, getAuth, fetchSignInMethodsForEmail } from "firebase/auth";
 import firebaseApp from '@/firebase.js';
+import { toHandlers } from "vue";
 
 const auth = getAuth(firebaseApp);
 
@@ -55,18 +56,28 @@ export default {
     },
 
     methods: {
-        resetPassword() {
-
-            try {
-                sendPasswordResetEmail(auth, this.email)
-                this.modalMessage = "Recovery link sent to your email";
+        async resetPassword() {
+            if (this.email !== '') {
+                const result = await fetchSignInMethodsForEmail(auth, this.email)
+                if (result.length === 0) {
+                    this.modalMessage = "Email not Registered"
+                    this.modalActive = true;
+                } else {
+                    try {
+                        sendPasswordResetEmail(auth, this.email)
+                        this.modalMessage = "Recovery link sent to your email";
+                        this.modalActive = true;
+                    } catch (err) {
+                        this.modalMessage = "Email does not exist";
+                        this.modalActive = true;
+                    }
+                }
+            } else {
                 this.modalActive = true;
-            } catch (err) {
-                this.modalMessage = "Email does not exist";
-                this.modalActive = true
+                this.modalMessage = "Please input Email";
             }
-
         },
+
         closeModal() {
             this.modalActive = !this.modalActive;
             this.email = "";

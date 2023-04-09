@@ -84,7 +84,8 @@ export default {
                             email: this.email
                         })
                         // alert('User Created')
-                        this.$router.push({ name: 'Login' })
+                        this.error = true;
+                        this.errorMsg = "User successfully created"
                     } else {
                         this.error = true;
                         this.errorMsg = "User has already been Registered";
