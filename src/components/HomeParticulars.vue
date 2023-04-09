@@ -18,11 +18,12 @@
 
 <script>
 import firebaseApp from '../firebase.js';
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 import { collection, getDoc, doc, deleteDoc } from "firebase/firestore";
 
-const db = getFirestore(firebaseApp);
-const USERID = "johndoe@gmail.com"
+
+
 
 export default {
     methods: {
@@ -32,6 +33,10 @@ export default {
     },
     mounted() {
         async function display() {
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;      
+            const db = getFirestore(firebaseApp);
+            const USERID = user.email;
             let index = 1
             const docRef = doc(db, "PillPal", USERID)
             const docSnap = await getDoc(docRef)

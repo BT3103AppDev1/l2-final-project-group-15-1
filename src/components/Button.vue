@@ -12,7 +12,7 @@
         type: String,
         default: 'Button',
       },
-      rootClassName: String,
+      
     },
   }
   </script>
@@ -30,10 +30,14 @@
     width: 100%;
     height: 100%;
     box-shadow: 5px 5px 10px 0px #d4d4d4;
-    margin-top: var(--dl-space-space-halfunit);
     text-align: center;
-    margin-bottom: var(--dl-space-space-halfunit);
     background-color: #ADE2DF;
+    cursor:pointer;
   }
+
+  .button:hover {
+  background-color: lightgreen;
+  box-shadow: 0px 0px 20px -18px;
+}
   
   </style>

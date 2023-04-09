@@ -83,6 +83,9 @@ export default {
                         setDoc(doc(db, "PillPal", this.email), {
                             email: this.email
                         })
+                        setDoc(doc(db, "PillPal", this.email), {
+                            Reward_Points: 0
+                        })
                         // alert('User Created')
                         this.error = true;
                         this.errorMsg = "User successfully created"
