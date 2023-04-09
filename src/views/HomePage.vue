@@ -1,15 +1,16 @@
 <script>
-    import HomeNav from '../components/HomeNav.vue'
+    // import HomeNav from '../components/HomeNav.vue'
     import HomeParticulars from '../components/HomeParticulars.vue';
     import Appointments from '../components/Appointments.vue';
+    import UpcomingReminders from '../components/UpcomingReminders.vue';
 
     export default {
 
         name: 'HomePage',
         components: {
-            HomeNav,
             HomeParticulars,
             Appointments,
+            UpcomingReminders,
         }
     }
 
@@ -17,10 +18,9 @@
 
 <template>
     <div>
-      <h1>Home View</h1>
-      <HomeNav />
-      <br><br>
-      <HomeParticulars /><Appointments />
+      <h1></h1>
+      <br>
+      <HomeParticulars /><Appointments /><UpcomingReminders />
       <!-- rest of the content -->
     </div>
 </template>

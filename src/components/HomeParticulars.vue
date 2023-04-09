@@ -1,13 +1,16 @@
 <template>
     <div class = "home_particulars"> 
         <h1 id = "home_name">Particulars</h1><br>
-        <table id = "home_particulars" class = "auto-index">
+        <!-- <table id = "home_particulars" class = "auto-index">
             <tr id = "home_particulars_table">
                 <th>Gender:</th>
                 <th>Date of Birth:</th>
                 <th>Reward Points:</th>
             </tr>
-        </table>
+        </table> -->
+        <h3 id = "home_gender">Gender: </h3>
+        <h3 id = "home_dob">Date of Birth: </h3>
+        <h3 id = "home_rewards">Reward Points: </h3>
         <br>
         <button id = "update_particulars_button" v-on:click="editParticulars">Update Particulars</button>
     </div>
@@ -37,45 +40,38 @@ export default {
             let user_dob = (data.Date_Of_Birth)
             let user_points = (data.Reward_Points)
 
-            let table = document.getElementById("home_particulars")
-            let row = table.insertRow(index)
-            let gender = row.insertCell(0)
-            let dob = row.insertCell(1)
-            let points = row.insertCell(2)
+            // let table = document.getElementById("home_particulars")
+            // let row = table.insertRow(index)
+            // let gender = row.insertCell(0)
+            // let dob = row.insertCell(1)
+            // let points = row.insertCell(2)
 
-            gender.innerHTML = user_gender
+            // gender.innerHTML = user_gender
             let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
             let birth_date = ""
-            if (user_dob[0] == "0") {
-                birth_date += user_dob[1]
+            if (user_dob[8] == "0") {
+                birth_date += user_dob[9]
             } else {
-                birth_date += user_dob.slice(0, 2)
+                birth_date += user_dob.slice(8)
             }
             birth_date += " "
-            if (user_dob[3] == "0") {
-                birth_date += months[Number(user_dob[4]) - 1]
+            if (user_dob[5] == "0") {
+                birth_date += months[Number(user_dob[6]) - 1]
             } else {
-                birth_date += months[Number(user_dob.slice(3, 5)) - 1]
+                birth_date += months[Number(user_dob.slice(5, 7)) - 1]
             }
             birth_date += " "
-            if (user_dob[6] == 0) {
-                birth_date += "200"
-                birth_date += user_dob[7]
-            } else {
-                year = user_dob.slice(6)
-                if (int(year) <= 23) {
-                    birth_date += "20"
-                    birth_date += year
-                } else {
-                    birth_date += "19"
-                    birth_date += year
-                }
-            }
-            dob.innerHTML = birth_date
-            points.innerHTML = user_points
+            birth_date += user_dob.slice(0,4)
+            
 
             let name = document.getElementById("home_name")
             name.innerHTML = (data.Name)
+            let gender = document.getElementById("home_gender")
+            gender.innerHTML = "Gender: " + user_gender
+            let dob = document.getElementById("home_dob")
+            dob.innerHTML = "Date of Birth: " + birth_date
+            let points = document.getElementById("home_rewards")
+            points.innerHTML = "Reward Points: " + user_points
         }
         display()
     } 
