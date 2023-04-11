@@ -22,7 +22,7 @@
         data() {
             return {
                 
-                show: true,
+                show: false,
                 message: 'No concurrent Medication Regime',
                 delay: 0x7fffffff// in milliseconds
             };
