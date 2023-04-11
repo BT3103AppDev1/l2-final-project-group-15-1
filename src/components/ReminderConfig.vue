@@ -30,83 +30,19 @@
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, getDoc, doc, deleteDoc, query, where, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
-const userId = 'johndoe@gmail.com';
+// const userId = 'johndoe@gmail.com';
 
 
 export default {
 
     name: 'ReminderConfig',
 
-    // data() {
-    //     return {
-            
-    //     medicationList: [],
-    //     checkedMedications: []
-    //     }
-    // },
-    // created() {
-    //     const userId = 'johndoe@gmail.com'
-    //     const medicationRef = collection(db, "PillPal")
-
-        
-    //     const docRef = doc(db, "PillPal", userId);
-    //     const docSnap = getDoc(docRef);
-    //     console.log("Document data:", docSnap.data())
-
-    //     medicationRef.on('johndoe@gmail.com', snapshot => {
-    //     const medicationData = snapshot.val()
-
-    //     const medicationList = []
-    //     for (let id in medicationData) {
-    //         medicationList.push({
-    //         id: id,
-    //         name: medicationData[id].Medication,
-    //         dosage: medicationData[id].Dosage,
-    //         frequency: medicationData[id].Frequency,
-    //         reminders: medicationData[id].Reminders
-    //         })
-    //     }
-
-    //     this.medicationList = medicationList
-    //     })
-    // },
+    
     methods: {
 
-        // async function readMedication() {
-        //     let allDocuments = await getDocs(collection(db, "PillPal", userId, "MedicationRegime"))
-
-        //     let index = 1
-        //     let table = document.getElementById("table")
-        //     let row = table.insertRow(index)
-
-        //     allDocuments.forEach((docs) => {
-
-        //         let documentData = docs.data()
-                
-        //         let medication = (documentData.Medication)
-        //         let dosage = (documentData.Dosage)
-        //         let frequency = (documentData.Frequency)
-        //         let reminders = (documentData.Reminders)            
-
-        //         let cell0 = row.insertCell(0);
-        //         let cell1 = row.insertCell(1);
-        //         let cell2 = row.insertCell(2);
-        //         let cell3 = row.insertCell(3);
-        //         let cell4 = row.insertCell(4)
-
-        //         cell0.innerHTML = index;
-        //         cell1.innerHTML = medication;
-        //         cell2.innerHTML = dosage;
-        //         cell3.innerHTML = frequency;
-        //         cell4.innerHTML = reminders;
-
-        //         index += 1
-        //     })
-        // }
-
-        // readMedication(),
 
         checkInputFormat() {
             let medication = document.getElementById("medication").value
@@ -129,6 +65,16 @@ export default {
         },
 
         async editMedication() {
+
+            var userId;
+
+            const auth = getAuth();
+            await onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userId = user.email
+                }
+                
+            });
 
             var errorMessage = this.checkInputFormat()
             console.log(errorMessage)
@@ -172,6 +118,8 @@ export default {
         async pageReload() {
             location.reload()
         },
+
+        
 
         
     }

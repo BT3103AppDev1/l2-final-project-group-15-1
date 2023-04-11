@@ -10,10 +10,12 @@
     import { getFirestore } from "firebase/firestore";
     import { collection, getDocs, getDoc, doc, deleteDoc, query, where, setDoc } from "firebase/firestore";
     import { Timestamp } from 'firebase/firestore'
+    import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 
     const db = getFirestore(firebaseApp);
-    const userId = 'johndoe@gmail.com';
+    // const userId = 'johndoe@gmail.com';
 
     export default {
 
@@ -31,7 +33,8 @@
 
         mounted() {
 
-            async function setTimedAlert() {
+            async function setTimedAlert(userId) {
+
                 let allDocuments = await getDocs(collection(db, "PillPal", userId, "MedicationRegime"))
 
                 let index = 1
@@ -108,8 +111,10 @@
             }
     
 
-            async function showAlert() {
-                var dict = await setTimedAlert()
+            async function showAlert(userId) {
+
+                
+                var dict = await setTimedAlert(userId)
 
                 console.log(dict["delay"])
 
@@ -128,8 +133,18 @@
 
             }
 
-            this.message = setTimedAlert()["message"]
-            showAlert()
+            
+
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    this.message = setTimedAlert(user.email)["message"]
+                    showAlert(user.email)
+                }
+                
+            });
+
+            
 
 
 

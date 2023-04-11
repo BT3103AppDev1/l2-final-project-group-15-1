@@ -34,10 +34,11 @@ import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, getDoc, doc, deleteDoc, query, where, setDoc } from "firebase/firestore";
 import { Timestamp } from 'firebase/firestore'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 const db = getFirestore(firebaseApp);
-const userId = 'johndoe@gmail.com';
+
 
 
 export default {
@@ -53,7 +54,15 @@ export default {
     },
     mounted() {
 
-        async function readMedication() {
+        async function readMedication(userId) {
+
+            // const db = getFirestore(firebaseApp);
+            // const auth = await getAuth(firebaseApp);
+            // const user = auth.currentUser;
+            // const userId = user.email;
+
+            // console.log(userId)
+
             let allDocuments = await getDocs(collection(db, "PillPal", userId, "MedicationRegime"))
 
             let index = 1
@@ -216,9 +225,17 @@ export default {
         }
         }
 
-        
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                readMedication(user.email)
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
 
-        readMedication(),
 
         async function takeMedication(medication) {
             let takeMedication = { Taken: admin.firestore.TimeStamp.fromDate(new Date()) }
@@ -237,7 +254,8 @@ export default {
             }
             readMedication();
         }
-
+    
+    // }
         
     }
 
