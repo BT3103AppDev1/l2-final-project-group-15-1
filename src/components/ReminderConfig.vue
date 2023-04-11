@@ -150,7 +150,8 @@ export default {
                 Dosage: dosage,
                 Frequency: frequency,
                 Reminders: reminders,
-                Taken: {}
+                Taken: {},
+                Lag: {},
             }   
 
             try {
