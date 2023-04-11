@@ -4,7 +4,7 @@
       <div class="search-container">
         <input
           type="text"
-          placeholder="Search for patients"
+          placeholder="Search for Patients by Email"
           v-model="searchTerm"
           class="search-input"
         />
@@ -13,22 +13,32 @@
         </button>
       </div>
       <!-- searchResults array from searchPatients() function -->
-      <div v-if="searchResults.length > 0">
-        <ul>
+      <div class="search-results" v-if="searchResults.length > 0">
             <!-- iterates through the array, displaying the user's name, email, medical condition, 
             and a button to open the user's account, to be implemented. -->
-          <li v-for="(user, index) in searchResults" :key="index">
-            <p>
-              Name: {{ user.name }}<br />
-              Email: {{ user.email }}<br />
-              Medical Condition: {{ user.medicalCondition }}
-            </p>
-            <button @click="openUserAccount(user.id)">
-              Open User Account
-            </button>
-          </li>
-        </ul>
-      </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Patient Email</th>
+              <th>Medical Conditions</th>
+              <th>User Account</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(user, index) in searchResults" :key="index" class="user-result">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.medicalConditions }}</td>
+              <td>
+                <button @click="openUserAccount(user.email)" class="user-profile-button">
+                  User Profile
+                </button>
+              </td>
+          </tr>
+        </tbody>
+        </table>
+    </div>
     </div>
   </template>
   
@@ -46,40 +56,32 @@ import { getFirestore } from "firebase/firestore";
     },
 
     methods: {
-        // async searchPatients() {
-        // const searchTerm = this.searchTerm.trim().toLowerCase();
 
-        // if (!searchTerm) {
-        //     this.searchResults = [];
-        //     return;
-        // }
+        async searchPatients() {
+          // Get Firestore reference
+          const db = getFirestore(firebaseApp);
+          const usersRef = collection(db, "PillPal");
 
-        // const db = getFirestore(firebaseApp);
-        // const usersRef = collection(db, 'PillPal');
+          // Retrieve all documents
+          const querySnapshot = await getDocs(usersRef);
 
-        // // Query users by name and email
-        // const nameQuery = query(usersRef, where('name', '==', searchTerm));
-        // const emailQuery = query(usersRef, where('email', '==', searchTerm));
-
-        // // Fetch matching users
-        // const [nameSnap, emailSnap] = await Promise.all([
-        //     getDocs(nameQuery),
-        //     getDocs(emailQuery),
-        // ]);
-
-        // // Combine search results and remove duplicates
-        // const uniqueResults = new Map();
-        // for (const doc of [...nameSnap.docs, ...emailSnap.docs]) {
-        //     const userData = { id: doc.id, ...doc.data() };
-        //     uniqueResults.set(doc.id, userData);
-        // }
-
-        // this.searchResults = Array.from(uniqueResults.values());
-        // },
-
-        openUserAccount(userId) {
-            // Implement the logic to open the user's account
+          // Filter documents based on the search term
+          const searchTermLowerCase = this.searchTerm.toLowerCase(); // convert search input text to lowercase
+          this.searchResults = querySnapshot.docs
+            .filter(doc => doc.id.toLowerCase().includes(searchTermLowerCase)) // match lowercase document ID (user email) with searchTermLowerCase
+            .map(doc => {
+              return {
+                name: doc.data().Name, // retrieve 'Name' field from document
+                email: doc.id, // document ID is the user email
+                medicalConditions: doc.data().Medical_Conditions
+              };
+            });
         },
+
+        openUserAccount(userEmail) {
+            // Implement the logic to open the user's account
+            window.alert("gay");
+          },
         },
     };
   </script>
@@ -113,7 +115,7 @@ import { getFirestore } from "firebase/firestore";
   
   .search-button {
     padding: 0.5rem 1rem;
-    background-color: rgb(39, 155, 39);
+    background-color: rgb(44, 174, 44);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -124,6 +126,54 @@ import { getFirestore } from "firebase/firestore";
   
   .search-button:hover {
     background-color: rgb(25, 122, 25);
+  }
+
+  .search-results {
+    display: flex;
+    flex-direction: column;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #f2f2f2;
+    color: black;
+  }
+
+  td:last-child {
+    text-align: center;
+  }
+
+  .user-profile-button {
+    background-color: #a7b3db;
+    color: black;
+    font-weight: bold;
+    padding: 6px 12px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition-duration: 0.4s;
+  }
+
+  .user-profile-button:hover {
+    background-color: #6d61c8;
+    border-color: #000000;
   }
   </style>
   

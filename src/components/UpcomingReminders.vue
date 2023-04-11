@@ -1,9 +1,9 @@
 <template>
-    <div class = "home_appointments"> 
-        <h1>Upcoming Appointments</h1><br>
-        <h3 id = "upcoming"></h3>
-        <table id = "appointment_table" class= "auto-index">
-        </table>   
+    <div class = "home_reminders"> 
+        <h1>Upcoming Reminders</h1><br>
+        <h3 id = "upcoming_reminders"></h3>
+            <table id = "reminder_table" class= "auto-index">
+            </table>   
     </div>
 </template>
 
@@ -20,30 +20,29 @@ export default {
             const auth = getAuth(firebaseApp);
             const user = auth.currentUser;
             const USERID = user.email;
-
-            let allDocuments = await getDocs(collection(db, "PillPal", USERID, "Appointments"))
+            let allDocuments = await getDocs(collection(db, "PillPal", USERID, "MedicationRegime"))
             let index = 0
-            let table = document.getElementById("appointment_table")
+            let table = document.getElementById("reminder_table")
 
             if (!allDocuments.empty) {
                 allDocuments.forEach((docs) => {
                     let row = table.insertRow(index)
                     let documentData = docs.data()
 
-                    let date = (documentData.Date)
-                    let location = (documentData.Location)
+                    let name = (documentData.Medication)
+                    let time = (documentData.Reminders)
 
                     let cell0 = row.insertCell(0);
                     let cell1 = row.insertCell(1);
 
-                    cell0.innerHTML = date;
-                    cell1.innerHTML = location;
+                    cell0.innerHTML = name;
+                    cell1.innerHTML = time + " hrs";
 
                     index += 1
                 })
             } else {
-                let appts = document.getElementById("upcoming")
-                appts.innerHTML = "You currently have no scheduled appointments."
+                let reminders = document.getElementById("upcoming_reminders")
+                reminders.innerHTML = "You currently have no upcoming reminders."
             }
         }
         display()
@@ -52,19 +51,7 @@ export default {
 </script>
 
 <style>
-h1 {
-    text-align: center;
-}
-#appointment_table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    border-collapse: separate;
-}
-.home_appointments{
-    display: inline-block;
+.home_reminders{
     background-color: rgb(132, 241, 132);
     border-radius: 20px;
     border-width: 3px;
@@ -75,5 +62,4 @@ h1 {
     margin: 50px auto 50px auto;
     padding: 10px
 }
-
 </style>

@@ -4,24 +4,23 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-    <div class="wrapper">
-      <!-- <div class="app"> -->
-        
-        <RouterView />
-      <!-- </div> -->
-    </div>
+  <div>
+    <Header></Header>
+    <NavBar></NavBar>
+  </div>
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
-import UpdateParticulars from './components/UpdateParticulars.vue';
+
+import Header from './components/Header.vue';
+import NavBar from './components/NavBar.vue';
 
 export default {
   name: 'app',
   components: {
-    Navigation,
-    UpdateParticulars,
-  },
+    Header,
+    NavBar,
+}
 };
 
 </script>
@@ -32,13 +31,16 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  text-align: center;
   box-sizing: border-box;
   font-family: "Quicksand", sans-serif;
-  
 }
 
 body, html {
   margin:0;
   padding:0;
+  width: 100%;
 }
 </style>
+
+

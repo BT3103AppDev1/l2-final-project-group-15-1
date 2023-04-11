@@ -1,34 +1,43 @@
 <template>
     <div class = "home_particulars"> 
-        <h1 id = "home_name">Particulars</h1><br>
-        <table id = "home_particulars" class = "auto-index">
+        <h1 id = "home_name">Please update your particulars.</h1><br>
+        <!-- <table id = "home_particulars" class = "auto-index">
             <tr id = "home_particulars_table">
                 <th>Gender:</th>
                 <th>Date of Birth:</th>
                 <th>Reward Points:</th>
             </tr>
-        </table>
-        <br>
+        </table> -->
+        <div class = "home_details">
+            <h3 id = "home_gender">Gender: NA</h3>
+            <h3 id = "home_dob">Date of Birth: NA</h3>
+            <h3 id = "home_rewards">Reward Points: 0</h3>
+        </div>
         <button id = "update_particulars_button" v-on:click="editParticulars">Update Particulars</button>
     </div>
 </template>
 
 <script>
 import firebaseApp from '../firebase.js';
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
-import { collection, getDoc, doc, deleteDoc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 
-const db = getFirestore(firebaseApp);
-const USERID = "johndoe@gmail.com"
+
+
 
 export default {
     methods: {
         editParticulars() {
             this.$router.push('/particulars')
-        }
+        },    
     },
     mounted() {
         async function display() {
+            const db = getFirestore(firebaseApp);
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;
+            const USERID = user.email;
             let index = 1
             const docRef = doc(db, "PillPal", USERID)
             const docSnap = await getDoc(docRef)
@@ -37,45 +46,41 @@ export default {
             let user_dob = (data.Date_Of_Birth)
             let user_points = (data.Reward_Points)
 
-            let table = document.getElementById("home_particulars")
-            let row = table.insertRow(index)
-            let gender = row.insertCell(0)
-            let dob = row.insertCell(1)
-            let points = row.insertCell(2)
+            // let table = document.getElementById("home_particulars")
+            // let row = table.insertRow(index)
+            // let gender = row.insertCell(0)
+            // let dob = row.insertCell(1)
+            // let points = row.insertCell(2)
 
-            gender.innerHTML = user_gender
+            // gender.innerHTML = user_gender
             let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
             let birth_date = ""
-            if (user_dob[0] == "0") {
-                birth_date += user_dob[1]
+            if (user_dob[8] == "0") {
+                birth_date += user_dob[9]
             } else {
-                birth_date += user_dob.slice(0, 2)
+                birth_date += user_dob.slice(8)
             }
             birth_date += " "
-            if (user_dob[3] == "0") {
-                birth_date += months[Number(user_dob[4]) - 1]
+            if (user_dob[5] == "0") {
+                birth_date += months[Number(user_dob[6]) - 1]
             } else {
-                birth_date += months[Number(user_dob.slice(3, 5)) - 1]
+                birth_date += months[Number(user_dob.slice(5, 7)) - 1]
             }
             birth_date += " "
-            if (user_dob[6] == 0) {
-                birth_date += "200"
-                birth_date += user_dob[7]
-            } else {
-                year = user_dob.slice(6)
-                if (int(year) <= 23) {
-                    birth_date += "20"
-                    birth_date += year
-                } else {
-                    birth_date += "19"
-                    birth_date += year
-                }
-            }
-            dob.innerHTML = birth_date
-            points.innerHTML = user_points
+            birth_date += user_dob.slice(0,4)
+            
 
             let name = document.getElementById("home_name")
             name.innerHTML = (data.Name)
+            let gender = document.getElementById("home_gender")
+            gender.innerHTML = "Gender: " + user_gender
+            let dob = document.getElementById("home_dob")
+            dob.innerHTML = "Date of Birth: " + birth_date
+            let points = document.getElementById("home_rewards")
+            if (user_points) {
+                points.innerHTML = "Reward Points: " + user_points
+            }
+            
         }
         display()
     } 
@@ -107,10 +112,18 @@ table {
     margin: 50px auto 50px auto;
 }
 
+.home_details{
+    text-align: center;
+}
+
 #update_particulars_button{
     background-color: white;
-    margin-bottom: 10px;
+    margin: 10px;
     padding: 3px;
+}
+
+#home_name {
+    padding-top: 10px;
 }
 
 </style>

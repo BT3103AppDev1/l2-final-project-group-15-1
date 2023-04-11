@@ -84,11 +84,15 @@ export default {
                 this.error = true;
                 this.errorMsg = "Password and Confirmed Password are not the same";
             } else {
+
                 if (current_email.length === 0 || current_pw.length === 0 || current_reconfirm_pw.length === 0) {
                     this.error = true;
                     this.errorMsg = "Please fill out all fields";
                 } else {
                     if (current_pw.length < 6) {
+
+                
+
                         this.error = true;
                         this.errorMsg = "Please input at least 6 characters for your password";
                     } else {
@@ -102,6 +106,9 @@ export default {
                             const user = createdUser
                             setDoc(doc(db, "PillPal", current_email), {
                                 email: current_email
+                            })
+                            setDoc(doc(db, "PillPal", current_email), {
+                            Reward_Points: 0
                             })
                             this.error = true;
                             this.errorMsg = "User successfully created";
