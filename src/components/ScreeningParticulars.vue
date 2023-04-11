@@ -1,48 +1,53 @@
 <template>
     <div class = "particulars"> 
-        <h1 id = "name">Particulars</h1><br>
-        <!-- <table id = "particulars" class = "auto-index">
-            <tr id = "particulars_table">
-                <th>Gender:</th>
-                <th>Height:</th>
-                <th>Weight:</th>
-                <th>Blood Type:</th>
-                <th>Age:</th>
-                <th>BMI:</th>
-                <th>Existing Medical Conditions:</th>
-            </tr>
-        </table> -->
-        <h3 id = "screening_gender">Gender: NIL</h3>
-        <h3 id = "screening_height">Height: NIL</h3>
-        <h3 id = "screening_weight">Weight: NIL</h3>
-        <h3 id = "screening_blood">Blood Type: NIL</h3>
-        <h3 id = "screening_age">Age: NIL</h3>
-        <h3 id = "screening_bmi">BMI: NIL</h3>
-        <h3 id = "screening_medcons">Existing Medical Conditions: NIL</h3>
+        <div id = "screening_particulars">
+            <h1 id = "name">Particulars</h1><br>
+            <!-- <table id = "particulars" class = "auto-index">
+                <tr id = "particulars_table">
+                    <th>Gender:</th>
+                    <th>Height:</th>
+                    <th>Weight:</th>
+                    <th>Blood Type:</th>
+                    <th>Age:</th>
+                    <th>BMI:</th>
+                    <th>Existing Medical Conditions:</th>
+                </tr>
+            </table> -->
+            <h3 id = "screening_gender">Gender: NA</h3>
+            <h3 id = "screening_height">Height: NA</h3>
+            <h3 id = "screening_weight">Weight: NA</h3>
+            <h3 id = "screening_blood">Blood Type: NA</h3>
+            <h3 id = "screening_age">Age: NA</h3>
+            <h3 id = "screening_bmi">BMI: NA</h3>
+            <h3 id = "screening_medcons">Existing Medical Conditions: NA</h3>
+        </div>
     </div>
 </template>
 
 <script>
 import firebaseApp from '../firebase.js';
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 import { collection, getDoc, doc, deleteDoc } from "firebase/firestore";
-
-const db = getFirestore(firebaseApp);
-const USERID = "johndoe@gmail.com"
 
 export default {
     mounted() {
         async function display() {
+            const db = getFirestore(firebaseApp);
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;
+            const USERID = user.email;
             let index = 1
             const docRef = doc(db, "PillPal", USERID)
             const docSnap = await getDoc(docRef)
             let data = docSnap.data()
+            let user_name = (data.Name)
             let user_gender = (data.Gender)
             let user_height = (data.Height)
             let adj_height = user_height / 100
             let user_weight = (data.Weight)
             let user_blood_type = (data.Blood_Type)
-            let user_age = (data.Age)
+            let user_dob = (data.Date_Of_Birth)
             let user_bmi = user_weight / (adj_height * adj_height)
             let user_med_cons = (data.Medical_Conditions)
 
@@ -63,17 +68,37 @@ export default {
             let bmi = document.getElementById("screening_bmi")
             let med_cons = document.getElementById("screening_medcons")
 
-
-            gender.innerHTML = "Gender: " + user_gender
-            height.innerHTML = "Height: " + user_height
-            weight.innerHTML = "Weight: " + user_weight
-            blood_type.innerHTML = "Blood Type: " + user_blood_type
-            age.innerHTML = "Age: " + user_age
-            bmi.innerHTML = "BMI: " + user_bmi.toFixed(1)
-            med_cons.innerHTML = "Existing Medical Conditions: " + user_med_cons
+            if (user_gender) {
+                gender.innerHTML = "Gender: " + user_gender
+            }
+            if (user_height) {
+                height.innerHTML = "Height: " + user_height
+            }
+            if (user_weight) {
+                weight.innerHTML = "Weight: " + user_weight
+            }
+            if (user_blood_type) {
+                blood_type.innerHTML = "Blood Type: " + user_blood_type
+            }
+            if (user_dob) {
+                let user_age = 2023 - Number(user_dob.slice(0,4))
+                age.innerHTML = "Age: " + user_age
+            }
+            if (user_bmi) {
+                bmi.innerHTML = "BMI: " + user_bmi.toFixed(1)
+            }
+            if (user_med_cons) {
+                med_cons.innerHTML = "Existing Medical Conditions: " + user_med_cons
+            }
+            
 
             let name = document.getElementById("name")
-            name.innerHTML = (data.Name)
+            if (user_name) {
+                name.innerHTML = user_name
+            } else {
+                name.innerHTML = "Please update your particulars first."
+            }
+            
         }
         display()
     } 
@@ -109,10 +134,12 @@ tr, td {
 
 h3{
     text-align: center;
-    padding-left: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
     width: 100%;
+}
+#screening_particulars{
+    padding: 10px;
 }
 
 </style>

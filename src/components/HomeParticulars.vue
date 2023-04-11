@@ -1,6 +1,6 @@
 <template>
     <div class = "home_particulars"> 
-        <h1 id = "home_name">Particulars</h1><br>
+        <h1 id = "home_name">Please update your particulars.</h1><br>
         <!-- <table id = "home_particulars" class = "auto-index">
             <tr id = "home_particulars_table">
                 <th>Gender:</th>
@@ -8,10 +8,11 @@
                 <th>Reward Points:</th>
             </tr>
         </table> -->
-        <h3 id = "home_gender">Gender: </h3>
-        <h3 id = "home_dob">Date of Birth: </h3>
-        <h3 id = "home_rewards">Reward Points: </h3>
-        <br>
+        <div class = "home_details">
+            <h3 id = "home_gender">Gender: NA</h3>
+            <h3 id = "home_dob">Date of Birth: NA</h3>
+            <h3 id = "home_rewards">Reward Points: 0</h3>
+        </div>
         <button id = "update_particulars_button" v-on:click="editParticulars">Update Particulars</button>
     </div>
 </template>
@@ -20,7 +21,7 @@
 import firebaseApp from '../firebase.js';
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
-import { collection, getDoc, doc, deleteDoc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 
 
 
@@ -29,13 +30,13 @@ export default {
     methods: {
         editParticulars() {
             this.$router.push('/particulars')
-        }
+        },    
     },
     mounted() {
         async function display() {
-            const auth = getAuth(firebaseApp);
-            const user = auth.currentUser;      
             const db = getFirestore(firebaseApp);
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;
             const USERID = user.email;
             let index = 1
             const docRef = doc(db, "PillPal", USERID)
@@ -76,7 +77,10 @@ export default {
             let dob = document.getElementById("home_dob")
             dob.innerHTML = "Date of Birth: " + birth_date
             let points = document.getElementById("home_rewards")
-            points.innerHTML = "Reward Points: " + user_points
+            if (user_points) {
+                points.innerHTML = "Reward Points: " + user_points
+            }
+            
         }
         display()
     } 
@@ -108,10 +112,18 @@ table {
     margin: 50px auto 50px auto;
 }
 
+.home_details{
+    text-align: center;
+}
+
 #update_particulars_button{
     background-color: white;
-    margin-bottom: 10px;
+    margin: 10px;
     padding: 3px;
+}
+
+#home_name {
+    padding-top: 10px;
 }
 
 </style>

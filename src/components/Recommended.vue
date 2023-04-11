@@ -1,35 +1,46 @@
 <template>
     <div class = "screenings"> 
-        <h1>Screening Recommendations</h1><br>
-        <table id = "recommendations" class = "auto-index">
-            <tr>
-                <th>Type of Screening</th>
-                <th>Frequency</th>
-            </tr>
-        </table>
+        <div id = "screening_reco">
+            <h1>Screening Recommendations</h1><br>
+            <table id = "recommendations" class = "auto-index">
+                <tr>
+                    <th>Type of Screening</th>
+                    <th>Frequency</th>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 
 <script>
 import firebaseApp from '../firebase.js';
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
-import { collection, getDoc, doc, deleteDoc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 
-const db = getFirestore(firebaseApp);
-const USERID = "johndoe@gmail.com"
+
 
 export default {
     mounted() {
         async function display() {
+            const db = getFirestore(firebaseApp);
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;
+            const USERID = user.email;
             let index = 1
             const docRef = doc(db, "PillPal", USERID)
             const docSnap = await getDoc(docRef)
             let data = docSnap.data()
             let height = (data.Height) / 100
             let weight = (data.Weight)
-            let age = (data.Age)
+            let user_dob = (data.Date_Of_Birth)
+            let age = 2023 - Number(user_dob.slice(0,4))
             let bmi = weight / (height * height)
             let med_cons = (data.Medical_Conditions)
+            let condition = false
+            if (med_cons) {
+                condition = true
+            }
             let gender = (data.Gender)
 
             let table = document.getElementById("recommendations")
@@ -43,7 +54,7 @@ export default {
                 frequency.innerHTML = "Once A Year"
                 index = index + 1
             }
-            if ((bmi > 25 && med_cons[0] != "NIL") || age >= 45) {
+            if ((bmi > 25 && condition) || age >= 45) {
                 let row = table.insertRow(index)
                 let type = row.insertCell(0);
                 let frequency = row.insertCell(1);
@@ -116,7 +127,7 @@ export default {
                 index = index + 1
             }
             if (age >= 18 && age < 40) {
-                if (med_cons[0] == "NIL") {
+                if (condition) {
                     let row = table.insertRow(index)
                     let type = row.insertCell(0);
                     let frequency = row.insertCell(1);
@@ -134,7 +145,7 @@ export default {
                     index = index + 1
                 }
             }
-            if (age >= 40 && age < 65 && med_cons[0] != "NIL") {
+            if (age >= 40 && age < 65 && condition) {
                 let row = table.insertRow(index)
                 let type = row.insertCell(0);
                 let frequency = row.insertCell(1);
@@ -181,5 +192,8 @@ table {
     width: 50%;
     text-align: center;
     margin: 50px auto 50px auto;
+}
+#screening_reco{
+    padding: 10px;
 }
 </style>
