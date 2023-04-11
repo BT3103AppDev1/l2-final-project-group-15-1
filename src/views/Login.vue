@@ -66,7 +66,7 @@ export default {
 <script>
 import { signInWithEmailAndPassword, getAuth, fetchSignInMethodsForEmail } from "firebase/auth";
 import firebaseApp from '@/firebase.js';
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const auth = getAuth(firebaseApp)
 
@@ -76,36 +76,37 @@ export default {
     components: {},
     data() {
         return {
-            email: null,
-            password: null,
-            error: null,
-            errorMsg: "",
+            email: '',
+            password: '',
+            error: '',
+            errorMsg: '',
         }
     },
     methods: {
         async login() {
-            if (this.email !== '' && this.password !== '') {
-                const numOfSignIn = await fetchSignInMethodsForEmail(auth, this.email)
+            const current_email = this.email;
+            const current_pw = this.password;
+            if (current_email.length === 0 || current_pw.length === 0) {
+                this.errorMsg = "Please enter both Email and Password";
+                this.error = true;
+            } else {
+                const numOfSignIn = await fetchSignInMethodsForEmail(auth, current_email)
                 const result = numOfSignIn
                 if (result.length === 0) {
-                    this.error = true;
                     this.errorMsg = "User has not been registered"
+                    this.error = true;
                 } else {
                     try {
-                        const signedUser = await signInWithEmailAndPassword(auth, this.email, this.password)
+                        const signedUser = await signInWithEmailAndPassword(auth, current_email, current_pw)
                         const user = signedUser
                         this.$router.push({ name: "HomePage" });
-                        document.getElementById('login').reset();
                         this.error = false;
                         this.errorMsg = "";
                     } catch (err) {
+                        this.errorMsg = "Invalid password Entered";
                         this.error = true;
-                        this.errorMsg = "Error logging in";
                     }
                 }
-            } else {
-                this.error = true;
-                this.errorMsg = "Invalid Email Entered";
             }
         },
     },

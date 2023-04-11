@@ -1,7 +1,8 @@
 <template>
+    
     <div class="form-wrap">
 
-        <form class="register">
+        <form class="register" ref="registerForm">
 
             <p class="login-register">
                 Already have an account?
@@ -24,18 +25,24 @@
                     <input type="password" placeholder="Reconfirm Password" v-model="reconfirmpassword" />
                 </div>
 
+                <br>
+
                 <div v-show="error" class="error">{{ this.errorMsg }}</div>
 
             </div>
 
-            <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }">Forgot your password?</router-link>
+            <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }"> Forgot your password? </router-link>
 
             <button @click.prevent="register">Submit</button>
 
             <div class="angle"></div>
+
         </form>
+
         <div class="background"></div>
+
     </div>
+
 </template>
 
 <script>
@@ -53,8 +60,8 @@ export default {
             email: '',
             password: '',
             reconfirmpassword: '',
-            error: null,
-            errorMsg: "",
+            error: false,
+            errorMsg: '',
         };
     },
 
@@ -65,40 +72,52 @@ export default {
     // },
 
     methods: {
+        async clearForm() {
+            this.$refs.registerForm.reset();
+        },
+
         async register() {
-            if (this.password !== this.reconfirmpassword) {
+            const current_email = this.email;
+            const current_pw = this.password;
+            const current_reconfirm_pw = this.reconfirmpassword;
+            if (current_pw !== current_reconfirm_pw) {
                 this.error = true;
                 this.errorMsg = "Password and Confirmed Password are not the same";
-                // alert("Password and Retyped password are not the same")
             } else {
-                if (this.email !== '' && this.password !== '') {
-                    this.error = false;
-                    const numOfSignIn = await fetchSignInMethodsForEmail(auth, this.email)
-                    const result = numOfSignIn
-                    if (result.length === 0) {
-                        this.error = false;
-                        this.errorMsg = "";
-                        const createdUser = await createUserWithEmailAndPassword(auth, this.email, this.password)
-                        const user = createdUser
-                        setDoc(doc(db, "PillPal", this.email), {
-                            email: this.email
-                        })
-                        setDoc(doc(db, "PillPal", this.email), {
-                            Reward_Points: 0
-                        })
-                        // alert('User Created')
-                        this.error = true;
-                        this.errorMsg = "User successfully created"
-                    } else {
-                        this.error = true;
-                        this.errorMsg = "User has already been Registered";
-                        return;
-                    }
-                } else {
+
+                if (current_email.length === 0 || current_pw.length === 0 || current_reconfirm_pw.length === 0) {
                     this.error = true;
                     this.errorMsg = "Please fill out all fields";
-                    // alert("Please fill out all fields")
-                    return;
+                } else {
+                    if (current_pw.length < 6) {
+
+                
+
+                        this.error = true;
+                        this.errorMsg = "Please input at least 6 characters for your password";
+                    } else {
+                        this.error = false;
+                        const numOfSignIn = await fetchSignInMethodsForEmail(auth, current_email)
+                        const result = numOfSignIn
+                        if (result.length === 0) {
+                            this.error = false;
+                            this.errorMsg = "";
+                            const createdUser = await createUserWithEmailAndPassword(auth, current_email, current_pw)
+                            const user = createdUser
+                            setDoc(doc(db, "PillPal", current_email), {
+                                email: current_email
+                            })
+                            setDoc(doc(db, "PillPal", current_email), {
+                            Reward_Points: 0
+                            })
+                            this.error = true;
+                            this.errorMsg = "User successfully created";
+                            this.clearForm();
+                        } else {
+                            this.error = true;
+                            this.errorMsg = "User has already been Registered";
+                        }
+                    }
                 }
             }
         }
