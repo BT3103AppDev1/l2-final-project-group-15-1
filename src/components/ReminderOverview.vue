@@ -34,10 +34,11 @@ import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, getDoc, doc, deleteDoc, query, where, setDoc } from "firebase/firestore";
 import { Timestamp } from 'firebase/firestore'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 const db = getFirestore(firebaseApp);
-const userId = 'johndoe@gmail.com';
+
 
 
 export default {
@@ -53,7 +54,15 @@ export default {
     },
     mounted() {
 
-        async function readMedication() {
+        async function readMedication(userId) {
+
+            // const db = getFirestore(firebaseApp);
+            // const auth = await getAuth(firebaseApp);
+            // const user = auth.currentUser;
+            // const userId = user.email;
+
+            // console.log(userId)
+
             let allDocuments = await getDocs(collection(db, "PillPal", userId, "MedicationRegime"))
 
             let index = 1
@@ -74,6 +83,7 @@ export default {
                 let frequency = (documentData.Frequency)
                 let reminders = (documentData.Reminders)    
                 let taken = (documentData.Taken)   
+                let lag = (documentData.Lag)
                 
                 // console.log(taken)
                 
@@ -82,6 +92,10 @@ export default {
                 // console.log(numberOfDosesTaken)
 
                 var checkbox = false
+
+                var minTimeBetweenDoses = Number.MAX_SAFE_INTEGER
+
+                var timeFromLastDose = null;
 
                 // setTimeout(function() { alert("Reminder to take: " + medication); }, 1000);
 
@@ -93,7 +107,7 @@ export default {
                     var today = new Date();
                     var timeFromLastDose = (today.getHours() - lastTaken.getHours()) * 60 + (today.getMinutes() - lastTaken.getMinutes()) 
                     
-                    var minTimeBetweenDoses = Number.MAX_SAFE_INTEGER
+                    // minTimeBetweenDoses = Number.MAX_SAFE_INTEGER
 
                     
                     var hoursBetweenDoses = parseInt(reminders.split(":")[0])
@@ -103,7 +117,7 @@ export default {
 
                     
                     if (timeBetweenDoses < minTimeBetweenDoses) {
-                        var minTimeBetweenDoses = timeBetweenDoses
+                        minTimeBetweenDoses = timeBetweenDoses
                     }
 
 
@@ -143,8 +157,12 @@ export default {
                     cell5.appendChild(takenButton)
                     if (taken.length > 0) {
                         taken.push(Timestamp.fromDate(new Date()))
+                        var lagSeconds = timeFromLastDose - minTimeBetweenDoses
+                        lag.push(lagSeconds)
                     } else {
                         taken = new Array(Timestamp.fromDate(new Date()))
+                        lag = new Array()
+                        // lag.push(0)
                     }
                     
                     takenButton.onclick = async function() {
@@ -154,13 +172,16 @@ export default {
                             Dosage: dosage,
                             Frequency: frequency,
                             Reminders: reminders,
-                            Taken: taken
+                            Taken: taken,
+                            Lag: lag
                         }
 
                       
                         const docRef = await setDoc(doc(db, "PillPal", userId, "MedicationRegime", medication), takeMedication)
                         alert("Medication has been taken at: " + new Date())
                         location.reload()
+                        
+
                         
                     }
                 }
@@ -204,9 +225,17 @@ export default {
         }
         }
 
-        
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                readMedication(user.email)
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
 
-        readMedication(),
 
         async function takeMedication(medication) {
             let takeMedication = { Taken: admin.firestore.TimeStamp.fromDate(new Date()) }
@@ -225,7 +254,8 @@ export default {
             }
             readMedication();
         }
-
+    
+    // }
         
     }
 

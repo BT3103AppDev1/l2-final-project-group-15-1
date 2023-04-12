@@ -11,11 +11,12 @@
     import { getFirestore } from "firebase/firestore";
     import { collection, getDocs, getDoc, doc, deleteDoc, query, where, setDoc } from "firebase/firestore";
     import { Timestamp } from 'firebase/firestore'
+    import { getAuth, onAuthStateChanged } from "firebase/auth";
 
     import { CalendarHeatmap } from 'vue3-calendar-heatmap'
 
     const db = getFirestore(firebaseApp);
-    const userId = 'johndoe@gmail.com';
+    // const userId = 'johndoe@gmail.com';
 
 
     export default {
@@ -31,13 +32,21 @@
         },
 
         mounted() {
-            this.fetchHeatmapData();
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    this.fetchHeatmapData(user.email);
+                }
+                
+            });
+            
         },
 
         methods: {
 
-            async fetchHeatmapData() {
-                
+            async fetchHeatmapData(userId) {
+
+                    
                 const allDocuments = await getDocs(collection(db, "PillPal", userId, "MedicationRegime"))
 
                 var dict = {};
@@ -61,7 +70,7 @@
                         for (var i = 0; i < taken.length; i++) {
                             var timestamp = taken[i].toDate();
 
-                            console.log(timestamp)
+                            // console.log(timestamp)
 
                             
 
@@ -71,7 +80,7 @@
 
                             // This arrangement can be altered based on how we want the date's format to appear.
                             let date = `${year}-${month}-${day}`;
-                            console.log(date); 
+                            // console.log(date); 
 
 
                             // heatmapData[row] = heatmapData[row] || Array.from({ length: 24 }, () => 0);
@@ -89,7 +98,7 @@
 
                     })
 
-                    console.log(dict)
+                    // console.log(dict)
 
                     var dictLen = Object.keys(dict).length
 
@@ -103,9 +112,9 @@
 
                 }
 
-                console.log(heatmapData)
+                // console.log(heatmapData)
                 this.heatmapData = heatmapData;
-                console.log(this.heatmapData)
+                // console.log(this.heatmapData)
                 
             }
 

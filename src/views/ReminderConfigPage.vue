@@ -1,12 +1,15 @@
 <script>
   import ReminderConfig from '../components/ReminderConfig.vue'
   import ReminderOverview from '../components/ReminderOverview.vue'
+  import TimedAlert from '../components/TimedAlert.vue'
+
   
   export default {
     name: 'ReminderConfigPage',
     components: {
       ReminderConfig,
       ReminderOverview,
+      TimedAlert,
     }
     // your ReminderView component logic here
   }
@@ -17,6 +20,7 @@
       <h1>Reminder Configuration</h1>
       <ReminderOverview />
       <ReminderConfig />
+      <TimedAlert />
       
     </div>
 </template>
