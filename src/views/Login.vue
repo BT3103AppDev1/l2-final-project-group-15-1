@@ -36,7 +36,7 @@
             <div class="angle"></div>
         </form>
 
-        <div class="background"></div>
+        
 
     </div>
 </template>
@@ -92,21 +92,37 @@ export default {
 </script>
   
 <style lang="scss">
+* {
+    margin:0;
+    padding:0;
+}
+
+.login-register {
+  display: flex;
+  
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius:10px;
+  margin: 2rem;
+  background-color:white;
+}
 .form-wrap {
-    background: repeating-linear-gradient(rgba(240, 235, 244, 1),
-            rgba(161, 195, 209, 0.75),
-            rgba(241, 114, 161, 0.5));
+    background-image: url('../assets/background-registration.jpg');
+    background-position:center;
+    background-repeat: no-repeat;
+    background-size:cover;
     overflow: hidden;
     display: flex;
     height: 100vh;
     justify-content: center;
     align-self: center;
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
 
-    @media(min-width: 900px) {
-        width: 100%;
-    }
+    
 
     .login-register {
         margin-bottom: 32px;
@@ -125,9 +141,7 @@ export default {
         align-items: center;
         flex: 1;
 
-        @media(min-width:900px) {
-            padding: 0 50px;
-        }
+        
 
         h2 {
             text-align: center;
@@ -135,9 +149,7 @@ export default {
             color: #303030;
             margin-bottom: 40px;
 
-            @media(min-width: 900px) {
-                font-size: 40px;
-            }
+            
         }
 
         .inputs {
