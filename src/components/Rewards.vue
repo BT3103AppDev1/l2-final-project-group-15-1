@@ -20,7 +20,7 @@
     </div> 
         <!-- Display the list of available rewards -->
       <div class="allRewards">
-        <h1>Available Rewards</h1>
+        <h1 id="title">Available Rewards</h1>
         <div class="rewards">
           <div v-for="reward in rewards" :key="reward.id" class ='rewardCard'>
             <h2>{{ reward.name }}</h2>
@@ -141,11 +141,20 @@ export default {
 </script>
 
 <style scoped>
-
+ul{
+  color:darkblue;
+  font-size:20px;
+}
+#title{
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:40px;
+}
 .background {
-  background-image: url('../assets/background-image2.png');
+  background-image: url('../assets/after-login-page.jpg');
+  background-position:center ;
   background-repeat: no-repeat;
   background-size:cover;
+  min-height:90vh;
 }
 .box {
 	display:flex;

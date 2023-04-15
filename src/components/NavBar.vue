@@ -12,11 +12,9 @@
 </template>
 
 <script>
-import LogOutButton from './LogOutButton.vue'
+
 export default {
-    components: {
-      LogOutButton
-    },
+    
     methods: {
       showNav: function() {
         return this.$route.path !== '/' && this.$route.path !== "/login" && this.$route.path !== "/register" && this.$route.path !== "/forgot-password" && this.$route.path !== "/admin"

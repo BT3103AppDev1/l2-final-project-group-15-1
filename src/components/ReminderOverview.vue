@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="container">
+    	<h1>Reminder Configuration</h1>
       <table id = "table" class = "auto-index">
         <thead>
           <tr>
@@ -146,7 +147,7 @@ export default {
 
                 let takenButton = document.createElement("button")
                 takenButton.id = String(medication)
-                takenButton.className = "takenButton"
+                takenButton.classList.add()
 
 
                 if (checkbox) {
@@ -266,6 +267,52 @@ export default {
     
 }
 </script>
+
+<style scoped>
+h1{
+	margin:20px;
+}
+.container{
+    background-color: white;
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: #ccc;
+    border-style: solid;
+		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 70%;
+    text-align: center;
+    margin: 50px auto 50px auto;
+		padding-bottom:50px;
+}
+
+.takenButton {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.deleteButton {
+  background-color: #f44336; 
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+</style>
 
 
   

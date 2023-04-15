@@ -16,8 +16,7 @@
 </script>
 
 <template>
-    <div>
-      <h1>Reminder Configuration</h1>
+    <div class="background">
       <ReminderOverview />
       <ReminderConfig />
       <TimedAlert />
@@ -25,3 +24,12 @@
     </div>
 </template>
   
+<style scoped>
+.background {
+  background-image: url('../assets/after-login-page.jpg');
+  background-position:center ;
+  background-repeat: no-repeat;
+  background-size:cover;
+  min-height:90vh;
+}
+</style>

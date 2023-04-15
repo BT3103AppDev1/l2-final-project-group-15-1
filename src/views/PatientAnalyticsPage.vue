@@ -14,8 +14,7 @@
 </script>
 
 <template>
-    <div>
-      <h1 id="patientAnalytics">Patient Analytics</h1>
+    <div id="display">
       <TakeMedicationHeatMap />
       <LateMedicationConsumption />
       
@@ -23,7 +22,15 @@
 </template>
 
 <style scoped>
-#patientAnalytics {
-  padding:10px;
+
+
+#display{
+  
+  background-image: url('../assets/after-login-page.jpg');
+  background-position:center ;
+  background-repeat: no-repeat;
+  background-size:cover;
+  min-height:90vh;
+
 }
 </style>

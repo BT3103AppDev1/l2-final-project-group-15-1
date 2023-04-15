@@ -20,7 +20,13 @@
 </script>
 
 <style>
-.display{
-  display: inline;
+#display{
+  
+  background-image: url('../assets/after-login-page.jpg');
+  background-position:center ;
+  background-repeat: no-repeat;
+  background-size:cover;
+  min-height:90vh;
+
 }
 </style>

@@ -128,7 +128,7 @@ export default {
 <style scoped>
 .inputs {
     display: inline-block;
-    text-align: right;
+    text-align: center;
     width: 100%;
     max-width: 350px;
 }
@@ -152,7 +152,7 @@ input::-webkit-inner-spin-button {
     justify-content: center;
     align-self: center;
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
 }
 
 .login-register {

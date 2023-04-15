@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="heatmap-container">
       <calendar-heatmap  :values = "heatmapData" :end-date= "new Date()" :round="5" :max="10" class="heatmap"/>
     </div>
   </template>
@@ -127,9 +127,24 @@
 </script>
 
 <style scoped>
-.heatmap{
-    padding-top:30px;
+.heatmap-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 2rem auto;
+  background-color: white;
+  max-width:80%;
 }
+
+.heatmap text{
+    font-size:12px;
+}
+
+
 </style>
 
 
