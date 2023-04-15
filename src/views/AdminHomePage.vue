@@ -22,6 +22,7 @@
               <th>Patient Name</th>
               <th>Patient Email</th>
               <th>Medical Conditions</th>
+              <th>Dosage Punctuality</th>
               <th>User Account</th>
             </tr>
           </thead>
@@ -30,6 +31,7 @@
               <td>{{ user.name }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.medicalConditions }}</td>
+              <td>{{ user.punctuality }}</td>
               <td>
                 <button @click="openUserAccount(user.email)" class="user-profile-button">
                   User Profile
@@ -57,6 +59,28 @@ import { getFirestore } from "firebase/firestore";
 
     methods: {
 
+        // async searchPatients() {
+        //   // Get Firestore reference
+        //   const db = getFirestore(firebaseApp);
+        //   const usersRef = collection(db, "PillPal");
+
+        //   // Retrieve all documents
+        //   const querySnapshot = await getDocs(usersRef);
+
+        //   // Filter documents based on the search term
+        //   const searchTermLowerCase = this.searchTerm.toLowerCase(); // convert search input text to lowercase
+        //   this.searchResults = querySnapshot.docs
+        //     .filter(doc => doc.id.toLowerCase().includes(searchTermLowerCase)) // match lowercase document ID (user email) with searchTermLowerCase
+        //     .map(doc => {
+        //       return {
+        //         name: doc.data().Name, // retrieve 'Name' field from document
+        //         email: doc.id, // document ID is the user email
+        //         medicalConditions: doc.data().Medical_Conditions,
+        //         punctuality: doc.id
+        //       };
+        //     });
+        // },
+
         async searchPatients() {
           // Get Firestore reference
           const db = getFirestore(firebaseApp);
@@ -67,15 +91,45 @@ import { getFirestore } from "firebase/firestore";
 
           // Filter documents based on the search term
           const searchTermLowerCase = this.searchTerm.toLowerCase(); // convert search input text to lowercase
-          this.searchResults = querySnapshot.docs
-            .filter(doc => doc.id.toLowerCase().includes(searchTermLowerCase)) // match lowercase document ID (user email) with searchTermLowerCase
-            .map(doc => {
-              return {
-                name: doc.data().Name, // retrieve 'Name' field from document
-                email: doc.id, // document ID is the user email
-                medicalConditions: doc.data().Medical_Conditions
-              };
-            });
+          const searchResults = [];
+
+          function formatPercentage(value) {
+            const roundedValue = Math.round(value);
+            return (roundedValue === value) ? value : value.toFixed(2);
+          }
+
+          for (const doc of querySnapshot.docs) {
+            const userEmail = doc.id;
+            const userData = doc.data();
+
+            if (userEmail.toLowerCase().includes(searchTermLowerCase)) {
+              // Fetch data from the MedicationRegime subcollection
+              const medicationRegimeRef = collection(db, "PillPal", userEmail, "MedicationRegime");
+              const medicationRegimeSnapshot = await getDocs(medicationRegimeRef);
+
+              let totalNumbers = 0;
+              let numbersAbove60 = 0;
+
+              // Iterate through the MedicationRegime documents and calculate punctuality
+              medicationRegimeSnapshot.forEach((medicationRegimeDoc) => {
+                const lag = medicationRegimeDoc.data().Lag || []; // get the 'Lag' field
+
+                totalNumbers += lag.length;
+                numbersAbove60 += lag.filter(number => number > 60).length;
+              });
+
+              const punctuality = totalNumbers > 0 ? formatPercentage((numbersAbove60 / totalNumbers) * 100) + "%" : "No Medication";
+
+              searchResults.push({
+                name: userData.Name, // retrieve 'Name' field from document
+                email: userEmail, // document ID is the user email
+                medicalConditions: userData.Medical_Conditions,
+                punctuality: punctuality
+              });
+            }
+          }
+
+          this.searchResults = searchResults;
         },
 
         openUserAccount(userEmail) {
