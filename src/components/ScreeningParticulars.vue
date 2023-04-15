@@ -144,7 +144,7 @@ h3{
 }
 #screening_particulars{
     padding: 5px;
-	
+	margin:10px;
 }
 
 </style>
