@@ -147,7 +147,7 @@ export default {
 
                 let takenButton = document.createElement("button")
                 takenButton.id = String(medication)
-                takenButton.classList.add()
+                takenButton.className = "takenButton"
 
 
                 if (checkbox) {
@@ -285,7 +285,7 @@ h1{
 		padding-bottom:50px;
 }
 
-.takenButton {
+button.takenButton {
   background-color: #4CAF50;
   border: none;
   color: white;

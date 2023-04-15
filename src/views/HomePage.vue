@@ -17,7 +17,7 @@
 </script>
 
 <template>
-    <div>
+    <div class="background">
       <h1></h1>
       <br>
       <HomeParticulars /><Appointments /><UpcomingReminders />
@@ -25,3 +25,14 @@
     </div>
 </template>
 
+<style scoped>
+.background{
+  
+  background-image: url('../assets/after-login-page.jpg');
+  background-position:center ;
+  background-repeat: no-repeat;
+  background-size:cover;
+  min-height:90vh;
+
+}
+</style>
