@@ -15,9 +15,15 @@
 
 <template>
     <div>
-      <h1>Patient Analytics</h1>
+      <h1 id="patientAnalytics">Patient Analytics</h1>
       <TakeMedicationHeatMap />
       <LateMedicationConsumption />
       
     </div>
 </template>
+
+<style scoped>
+#patientAnalytics {
+  padding:10px;
+}
+</style>

@@ -12,7 +12,10 @@
         name:'RewardsPage',
         components: {
             Rewards,
-        }
+        },
+        style: {
+            backgroundImage: "url('../assets/background.png')",
+        },
     }
 </script>
 
