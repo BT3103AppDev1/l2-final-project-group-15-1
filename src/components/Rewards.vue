@@ -1,33 +1,35 @@
 <template>
-	<div class = box>
-		
-			<!-- Display the user's name, reward points, and current rewards -->
-			<div class ="userDetails" v-if="user">
-				<h1>{{ user.name }}</h1> <br><br>
-				<h3>Points: <span class="points">{{ user.points }}</span></h3>
-			</div>
+  <div class = 'background'>
+    <div class = box>
+      
+        <!-- Display the user's name, reward points, and current rewards -->
+        <div class ="userDetails" v-if="user">
+          <h1>{{ user.name }}</h1> <br><br>
+          <h3>Points: <span class="points">{{ user.points }}</span></h3>
+        </div>
 
-			<div class="userRewards">
-				<h1>Your Rewards</h1>
-				<ul v-if="user">
-					<li v-for="reward in user.rewards" :key="reward.id">
-            {{ reward.name }}
-            <button v-if='redeemable' @click="getRedemptionCode(reward)">Get Code </button>  
-          </li>
-				</ul>
-			</div>
-	</div> 
-			<!-- Display the list of available rewards -->
-		<div class="allRewards">
-			<h1>Available Rewards</h1>
-			<div class="rewards">
-				<div v-for="reward in rewards" :key="reward.id" class ='rewardCard'>
-					<h2>{{ reward.name }}</h2>
-					<h3>Points: {{ reward.points }}</h3>
-					<button :disabled="reward.points >= user.points" @click="redeemReward(reward)">Redeem</button>
-				</div>
-			</div>
-		</div>
+        <div class="userRewards">
+          <h1>Your Rewards</h1>
+          <ul v-if="user">
+            <li v-for="reward in user.rewards" :key="reward.id">
+              {{ reward.name }}
+              <button v-if='reward.redeemable' @click="getRedemptionCode(reward)">Get Code </button>  
+            </li>
+          </ul>
+        </div>
+    </div> 
+        <!-- Display the list of available rewards -->
+      <div class="allRewards">
+        <h1>Available Rewards</h1>
+        <div class="rewards">
+          <div v-for="reward in rewards" :key="reward.id" class ='rewardCard'>
+            <h2>{{ reward.name }}</h2>
+            <h3>Points: {{ reward.points }}</h3>
+            <button :disabled="reward.points >= user.points" @click="redeemReward(reward)">Redeem</button>
+          </div>
+        </div>
+      </div>
+  </div>
 
 </template>
 
@@ -101,12 +103,14 @@ export default {
       const user = auth.currentUser;
       const USERID = user.email;
       
-      
+      reward.redeemable = true;
+      reward.redemptionCode = Math.random().toString(36).substring(2,10)
       await updateDoc(doc(db, "PillPal", USERID), {
           Reward_Points: increment(-reward.points),
           Rewards: arrayUnion(reward),
         })
         
+      
         // Update the user's data in the component
         this.user.points -= reward.points;
         this.user.rewards.push(reward);
@@ -118,7 +122,7 @@ export default {
       const user = auth.currentUser;
       const USERID = user.email;
       emailjs.init('YPI4wyOhSA5g6D-cS');
-      const code = Math.random().toString(36).substring(2,10)
+      const code = reward.redemptionCode;
       var params = {
         to_name: this.user.name,
         reward_name: reward.name,
@@ -128,7 +132,7 @@ export default {
 
       }
         emailjs.send('service_mab6y4u','template_h3w5tgr',params)
-        this.redeemable = false;
+        reward.redeemable = false;
         this.emailSent = true;
         alert('Check your email for your redemption code.');
       },
@@ -137,6 +141,12 @@ export default {
 </script>
 
 <style scoped>
+
+.background {
+  background-image: url('../assets/background-image2.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+}
 .box {
 	display:flex;
 	flex-direction: row;
@@ -146,7 +156,7 @@ export default {
 
 .userDetails{
   display: flex;
-  
+  min-width: 300px;
   justify-content: center;
   flex-direction: column;
   border: 2px solid #ccc;
@@ -228,7 +238,7 @@ button:not(:disabled):active {
   display:flex;
   justify-content: space-evenly;
   text-align:center;
-  background: palegreen;
+  /* background: palegreen; */
 }
 
 .rewardCard * {
@@ -256,9 +266,9 @@ button:not(:disabled):active {
   color:darkblue;
 }
 
-.box{
+/* .box{
   background-color:paleturquoise;
-}
+} */
 
 .allRewards h1{
   margin:1rem;

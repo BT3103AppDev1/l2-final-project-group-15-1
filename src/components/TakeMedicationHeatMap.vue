@@ -1,6 +1,6 @@
 <template>
     <div>
-      <calendar-heatmap  :values = "heatmapData" :end-date= "new Date()" :round="5" :max="10" />
+      <calendar-heatmap  :values = "heatmapData" :end-date= "new Date()" :round="5" :max="10" class="heatmap"/>
     </div>
   </template>
   
@@ -125,6 +125,12 @@
 
 
 </script>
+
+<style scoped>
+.heatmap{
+    padding-top:30px;
+}
+</style>
 
 
 

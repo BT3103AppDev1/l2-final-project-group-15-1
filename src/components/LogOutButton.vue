@@ -39,13 +39,17 @@ export default {
 
 <style scoped>
 #btn {
-    text-align: center;
-    margin: auto;
+  text-align: center;
+  background-color: red;
+  color: white;
+  font-size: 18px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 #btn:hover {
-    color: rgb(243, 236, 236);
-    background-color: rgb(255, 94, 0);
-    box-shadow: 3px 3px grey
+    transform: scale(1.1);
 }
 </style>
