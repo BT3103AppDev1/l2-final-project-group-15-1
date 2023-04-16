@@ -36,7 +36,7 @@ export default {
                     let cell0 = row.insertCell(0);
                     let cell1 = row.insertCell(1);
 
-                    cell0.innerHTML = date;
+                    cell0.innerHTML = date + ":&nbsp&nbsp&nbsp&nbsp";
                     cell1.innerHTML = location;
 
                     index += 1
