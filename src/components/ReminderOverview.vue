@@ -278,6 +278,8 @@ export default {
                         if (taken.length > 0) {
                             taken.push(Timestamp.fromDate(new Date()))
                             var lagMin = timeFromLastDose - minTimeBetweenDoses
+                            console.log(lagMin)
+                            console.log(lag)
                             lag.push(lagMin)
                             // if (lagMin <= 60) {
                             //   updateDoc(doc(db, "PillPal", userId), {
@@ -286,7 +288,7 @@ export default {
                             // }
                         } else {
                             taken = new Array(Timestamp.fromDate(new Date()))
-                            // lag = new Array()
+                            lag = new Array()
                             // updateDoc(doc(db, "PillPal", userId), {
                             //     Reward_Points: increment(3),
                             //   })
