@@ -15,7 +15,7 @@
           class="search-input"
         /> <br>
         <button @click="searchPatients" class="search-button">
-          
+          Search
         </button>
       </div>
       <!-- searchResults array from searchPatients() function -->
