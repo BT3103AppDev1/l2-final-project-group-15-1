@@ -288,7 +288,7 @@ export default {
                             taken = new Array(Timestamp.fromDate(new Date()))
                             lag = new Array()
                             updateDoc(doc(db, "PillPal", userId), {
-                                Reward_Points: increment(3),
+                                // Reward_Points: increment(3),
                               })
                             // lag.push(0)
                         }

@@ -21,7 +21,7 @@
   .footer {
     color: white;
     width: 100%;
-    background-color: #14a400;
+    background-color: #74f663;
     height:200px;
   }
 

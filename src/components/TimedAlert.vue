@@ -133,7 +133,7 @@
                     } else if (dict["delay"] == -2) {
                             // alert(dict["message"])
                     } else {
-                        var result = confirm(dict["message"] + ".\nDo you want to record your comsumption now?")
+                        var result = confirm(dict["message"] + ".\nDo you want to record your consumption now?")
                         if (result) {
                             window.location.href = "/overview"
                         } 

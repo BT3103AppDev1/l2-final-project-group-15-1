@@ -11,17 +11,17 @@
 
                 <div class ='formpart'>
                     <label for = "dosage">Dosage:</label>    
-                    <input type = "text" id = "dosage" required = "" placeholder = "Enter Dosage:(ml, cups)" size="30"> <br><br>
+                    <input type = "text" id = "dosage" required = "" placeholder = "Enter Dosage:(ml, cups, etc.)" size="30"> <br><br>
                 </div>
 
                 <div class ='formpart'>
                     <label for = "frequency">Frequency:</label>    
-                    <input type = "text" id = "frequency" required = "" placeholder = "Enter Frequency:(Times per day)" size="30"> <br><br>
+                    <input type = "text" id = "frequency" required = "" placeholder = "Enter Frequency:(Daily, Weekly, etc.)" size="30"> <br><br>
                 </div>
 
                 <div class ='formpart'>
                     <label for = "reminders">Reminders:</label>    
-                    <input type = "text" id = "reminders" required = "" placeholder = "Enter Reminder times:(HH:SS) Format" size="30"> <br><br>
+                    <input type = "text" id = "reminders" required = "" placeholder = "Enter times between doses:(HH:MM)" size="30"> <br><br>
                 </div>
                 
                 <div class = "edit_medication" >
