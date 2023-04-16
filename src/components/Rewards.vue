@@ -166,7 +166,7 @@ ul{
   background-position:center ;
   background-repeat: no-repeat;
   background-size:cover;
-  min-height:90vh;
+  min-height:100vh;
 }
 .box {
 	display:flex;

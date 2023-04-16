@@ -125,7 +125,7 @@ export default {
   background-color:white;
 }
 .form-wrap {
-    background-image: url('../assets/background-registration.jpg');
+    background-image: url('../assets/login-background.jpg');
     background-position:center;
     background-repeat: no-repeat;
     background-size:cover;
