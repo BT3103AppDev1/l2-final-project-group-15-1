@@ -6,15 +6,13 @@
             <form class="reset">
 
                 <p class="login-register">
-                    Already have an account?
+                    <h3>Already have an account?</h3><br>
                     <router-link class="router-link" :to="{ name: 'Login' }">Login</router-link>
                 </p>
 
-                <h2>Reset Password</h2>
-
-                <br>
+                <h2 id="title">Reset Password</h2>
                 
-                <p>Forgot your password? Enter your email to reset it</p>
+                <p id="reset-text">Enter your email to reset your password.</p>
 
                 <div class="inputs">
 
@@ -24,13 +22,12 @@
 
                 </div>
 
-                <br>
 
                 <div v-show="error" class="error">{{ this.errorMsg }}</div>
 
                 <br>
 
-                <button @click.prevent="resetPassword"> Reset </button>
+                <button @click.prevent="resetPassword" id="reset-button"> Reset </button>
 
             </form>
 
@@ -110,6 +107,20 @@ export default {
 </script>
   
 <style lang="scss" scoped>
+
+.error{
+    font-weight:600;
+    color:darkred;
+}
+#reset-text{
+    color:black;
+    font-size:18px;
+    font-weight:600;
+}
+#title{
+    font-size:40px;
+    font-weight:bolder;
+}
 .input {
     display: inline-block;
     text-align: center;
@@ -139,5 +150,30 @@ form {
         }
     }
 }
+
+#reset-button {
+ background-color: #eee;
+ border: none;
+ padding: 1rem;
+ font-size: 1rem;
+ width: 5em;
+ border-radius: 1rem;
+ color: green;
+ box-shadow: 0 0.4rem #dfd9d9;
+ cursor: pointer;
+}
+
+#reset-button:active {
+ color: white;
+ box-shadow: 0 0.2rem #dfd9d9;
+ transform: translateY(0.2rem);
+}
+
+#reset-button:hover {
+ background: lightgreen;
+ color: white;
+ text-shadow: 0 0.1rem #bcb4b4;
+}
+
 </style>
   

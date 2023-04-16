@@ -8,7 +8,7 @@
         <div class="container">
           <div class="column">
             <span class="header">Any questions? Feel free to contact us!</span>
-            <span class="email">Email: PillPal@gmail.com</span>
+            <span class="email">Email: pillpalteam@gmail.com</span>
           </div>
         </div>
       </div>

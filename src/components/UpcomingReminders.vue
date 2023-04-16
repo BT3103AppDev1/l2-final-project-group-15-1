@@ -59,10 +59,12 @@ export default {
                         } else {
                             let reminders = document.getElementById("upcoming_reminders")
                             reminders.innerHTML = "You have yet to take " + name + "."
+                            reminders.setAttribute('style','color:darkblue;')
                         }
                     } else {
                         let reminders = document.getElementById("upcoming_reminders")
                         reminders.innerHTML = "You have yet to take " + name + "."
+                        reminders.setAttribute('style','color:darkblue;')
                     }
 
                     // let cell0 = row.insertCell(0);

@@ -45,7 +45,7 @@ export default {
   justify-content:center;
   cursor: pointer;
   padding: 10px 0px 10px 20px;
-  margin-left:10%;
+  margin-left:8%;
 }
 
 .button{

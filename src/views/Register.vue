@@ -5,11 +5,11 @@
         <form class="register" ref="registerForm">
 
             <p class="login-register">
-                Already have an account?
+                <h3>Already have an account?</h3> <br>
                 <router-link class="router-link" :to="{ name: 'Login' }">Login</router-link>
             </p>
 
-            <h2>Register to PillPal</h2>
+            <h2 id="title">Register to PillPal</h2>
 
             <div class="inputs">
 
@@ -25,15 +25,15 @@
                     <input type="password" placeholder="Reconfirm Password" v-model="reconfirmpassword" />
                 </div>
 
-                <br>
-
                 <div v-show="error" class="error">{{ this.errorMsg }}</div>
 
             </div>
 
-            <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }"> Forgot your password? </router-link>
+            <br>
 
-            <button @click.prevent="register">Submit</button>
+            <button @click.prevent="register" id="submit-button">Submit</button>
+
+            <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }"> Forgot your password? </router-link>
 
             <div class="angle"></div>
 
@@ -126,12 +126,11 @@ export default {
 </script>
 
 <style scoped>
-.inputs {
-    display: inline-block;
-    text-align: center;
-    width: 100%;
-    max-width: 350px;
+
+#title{
+    font-size:40px;
 }
+
 
 form {
     text-align: center;
@@ -145,7 +144,7 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.form-wrap {
+/* .form-wrap {
     overflow: hidden;
     display: flex;
     height: 100vh;
@@ -154,15 +153,27 @@ input::-webkit-inner-spin-button {
     margin: 0 auto;
     width: 100%;
 }
-
+*/
 .login-register {
-    margin-bottom: 32px;
-    color: black;
+  display: flex;
+  
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius:10px;
+  margin: 2rem;
+  background-color:white;
 }
-
+.router-link:hover{
+    font-size:120%;
+    transition: 0.5s ease all;
+    
+}
 .router-link {
     color: green;
-}
+} 
 
 form {
     padding: 0 5px;
@@ -176,9 +187,9 @@ form {
 
 h2 {
     text-align: center;
-    font-size: 32px;
+    font-size: 40px;
     color: lightblue;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .forgot-password {
@@ -193,5 +204,34 @@ h2 {
 
 :hover {
     border-color: grey;
+}
+
+#submit-button {
+ background-color: #eee;
+ border: none;
+ padding: 1rem;
+ font-size: 1rem;
+ width: 5em;
+ border-radius: 1rem;
+ color: green;
+ box-shadow: 0 0.4rem #dfd9d9;
+ cursor: pointer;
+}
+
+#submit-button:active {
+ color: white;
+ box-shadow: 0 0.2rem #dfd9d9;
+ transform: translateY(0.2rem);
+}
+
+#submit-button:hover {
+ background: lightgreen;
+ color: white;
+ text-shadow: 0 0.1rem #bcb4b4;
+}
+
+.error{
+    font-weight:600;
+    color:darkred;
 }
 </style>
