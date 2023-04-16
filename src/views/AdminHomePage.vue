@@ -117,17 +117,17 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
                   const medicationRegimeSnapshot = await getDocs(medicationRegimeRef);
 
                   let totalNumbers = 0;
-                  let numbersAbove60 = 0;
+                  let numbersBelow60 = 0;
 
                   // Iterate through the MedicationRegime documents and calculate punctuality
                   medicationRegimeSnapshot.forEach((medicationRegimeDoc) => {
                     const lag = medicationRegimeDoc.data().Lag || []; // get the 'Lag' field
 
                     totalNumbers += lag.length;
-                    numbersAbove60 += lag.filter(number => number > 60).length;
+                    numbersBelow60 += lag.filter(number => number <= 60).length;
                   });
 
-                  const punctuality = totalNumbers > 0 ? formatPercentage((numbersAbove60 / totalNumbers) * 100) + "%" : "No Medication";
+                  const punctuality = totalNumbers > 0 ? formatPercentage((numbersBelow60 / totalNumbers) * 100) + "%" : "No Medication";
                   const bmi = (userData.Weight / ((userData.Height/100) ** 2)).toFixed(2);
                   const result = isNaN(bmi) ? "Not Specified" : bmi;
                   searchResults.push({
