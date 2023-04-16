@@ -39,6 +39,7 @@ import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { increment, arrayUnion,collection, getDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default {
 
@@ -57,7 +58,18 @@ export default {
   },
 
   mounted() {
-    this.display();
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.display(user.email)
+            // ...
+        } else {
+            // User is signed out
+            // ...
+        }
+    });
+
+    
     
     let script= document.createElement('script')
     script.setAttribute('src', "https://cdn.jsdelivr.net/npm/emailjs-com@2.4.0/dist/email.min.js")
@@ -66,11 +78,11 @@ export default {
   },
 
   methods: {
-    async display() {
+    async display(USERID) {
       const db = getFirestore(firebaseApp);
-      const auth = getAuth(firebaseApp);
-      const user = auth.currentUser;
-      const USERID = user.email;
+      // const auth = getAuth(firebaseApp);
+      // const user = auth.currentUser;
+      // const USERID = user.email;
 
       const docRef = doc(db, "PillPal", USERID);
       const docSnap = await getDoc(docRef);

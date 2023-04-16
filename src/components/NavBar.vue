@@ -2,7 +2,8 @@
     <div class ="home-nav">
       <div id="routing" v-if="showNav()">
         <router-link to="/configure" class = 'nav-link'>Configure Medications/Supplements</router-link>
-        <router-link to="/overview" class = 'nav-link'>Full Medication/Supplement Overview</router-link>
+        <!-- <router-link to="/overview" class = 'nav-link'>Full Medication/Supplement Overview</router-link> -->
+        <a href="/overview" class = 'nav-link'>Full Medication/Supplement Overview</a>
         <router-link to="/rewards" class = 'nav-link'>Reward Points</router-link>
         <router-link to="/screening" class = 'nav-link'>Screening Recommendations</router-link>
         <router-link to="/analytics" class = 'nav-link'>Patient Analytics</router-link>

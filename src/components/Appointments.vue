@@ -9,17 +9,17 @@
 
 <script>
 import firebaseApp from '../firebase.js';
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs } from "firebase/firestore";
 
 export default {
     mounted() {
-        async function display() {
+        async function display(USERID) {
             const db = getFirestore(firebaseApp);
-            const auth = getAuth(firebaseApp);
-            const user = auth.currentUser;
-            const USERID = user.email;
+            // const auth = getAuth(firebaseApp);
+            // const user = auth.currentUser;
+            // const USERID = user.email;
 
             let allDocuments = await getDocs(collection(db, "PillPal", USERID, "Appointments"))
             let index = 0
@@ -46,7 +46,17 @@ export default {
                 appts.innerHTML = "You currently have no scheduled appointments."
             }
         }
-        display()
+
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                display(user.email)
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
     } 
 }
 </script>

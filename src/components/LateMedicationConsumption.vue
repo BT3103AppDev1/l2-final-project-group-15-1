@@ -94,10 +94,12 @@
 
                     totalMissedCounts += missedCounts
 
+                    totalMissedCounts = Math.floor(totalMissedCounts)
+
                 });
 
-                document.getElementById("averageTT").innerHTML = "Average time taken to record consumption: " + total / counts + " min";
-                document.getElementById("lateConsumption").innerHTML = "Number of missed doses: " + totalMissedCounts;
+                document.getElementById("averageTT").innerHTML = "Average time taken to record consumption for current regimes: " + total / counts + " min";
+                document.getElementById("lateConsumption").innerHTML = "Number of missed doses for current regimes: " + totalMissedCounts;
 
             }
 

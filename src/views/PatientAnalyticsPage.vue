@@ -1,13 +1,15 @@
 <script>
   import TakeMedicationHeatMap from '../components/TakeMedicationHeatMap.vue'
   import LateMedicationConsumption from '../components/LateMedicationConsumption.vue'
+  import TimedAlert from '../components/TimedAlert.vue';
   
   export default {
     name: 'PatientAnalyticsPage',
     components: {
       TakeMedicationHeatMap,
       LateMedicationConsumption,
-     
+      TimedAlert,
+      
     }
     // your ReminderView component logic here
   }
@@ -17,7 +19,7 @@
     <div id="display">
       <TakeMedicationHeatMap />
       <LateMedicationConsumption />
-      
+      <TimedAlert />
     </div>
 </template>
 
