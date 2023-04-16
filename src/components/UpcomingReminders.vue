@@ -50,7 +50,7 @@ export default {
                             let cell1 = row.insertCell(1);
 
                             cell0.innerHTML = name;
-                            cell1.innerHTML = time + " hrs";
+                            cell1.innerHTML = "Every " + time + " hrs";
                             
                             cell0.setAttribute("style", "padding: 0 10px; font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;");
                             cell1.setAttribute("style", "padding: 0 10px; font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;")

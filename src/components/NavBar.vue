@@ -1,7 +1,6 @@
 <template>
     <div class ="home-nav">
       <div id="routing" v-if="showNav()">
-        <router-link to="/configure" class = 'nav-link'>Configure Medications/Supplements</router-link>
         <!-- <router-link to="/overview" class = 'nav-link'>Full Medication/Supplement Overview</router-link> -->
         <a href="/overview" class = 'nav-link'>Full Medication/Supplement Overview</a>
         <router-link to="/rewards" class = 'nav-link'>Reward Points</router-link>
@@ -70,6 +69,10 @@ export default {
     top: -45%;
     background-color: #ADE2DF;
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+
+  #routing{
+    background-color: rgb(182, 249, 182);
   }
 
 /* #home-nav{
