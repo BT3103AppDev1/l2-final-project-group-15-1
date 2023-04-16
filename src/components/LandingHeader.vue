@@ -32,22 +32,10 @@
     display: flex;
     position: relative;
     justify-content: space-between;
+    margin-bottom:10px;
   }
   
-  .facebook-icon {
-    width: 50px;
-    height: 50px;
-    margin-right: var(--dl-space-space-oneandhalfunits);
-  }
-  .instagram-icon {
-    width: 50px;
-    height: 50px;
-    margin-right: var(--dl-space-space-oneandhalfunits);
-  }
-  .twitter-icon {
-    width: 50px;
-    height: 50px;
-  }
+  
   .text {
     top: 10px;
     left: 40%;
@@ -56,6 +44,7 @@
     text-align: center;
   }
   .links {
+    padding-top:10px;
     height: 50px;
     display: flex;  
     align-items: center;

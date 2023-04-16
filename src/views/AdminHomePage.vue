@@ -1,13 +1,19 @@
 <template>
+  <div class="background">
     <div class="admin-home-page">
-      <h1>Admin Home Page</h1><br><br><br><br>
+      <div class="header">
+        <h1 id="admin-header">PillPal Admin</h1>
+        <LogOutButton class="button"/>
+      </div>
+      
       <div class="search-container">
+        <h1>Patient Searchbar</h1> <br>
         <input
           type="text"
           placeholder="Search for Patients by Email"
           v-model="searchTerm"
           class="search-input"
-        />
+        /> <br>
         <button @click="searchPatients" class="search-button">
           Search
         </button>
@@ -16,7 +22,7 @@
       <div class="search-results" v-if="searchResults.length > 0">
             <!-- iterates through the array, displaying the user's name, email, medical condition, 
             and a button to open the user's account, to be implemented. -->
-        <table>
+        <table class="table-container">
           <thead>
             <tr>
               <th>Patient Name</th>
@@ -44,6 +50,7 @@
         </table>
     </div>
     </div>
+  </div>
   </template>
   
 <script>
@@ -51,6 +58,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import LogOutButton from '../components/LogOutButton.vue';
 
   export default {
     data() {
@@ -58,6 +66,9 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
         searchTerm: '',
         searchResults: [],
       };
+    },
+    components: {
+      LogOutButton
     },
 
     methods: {
@@ -159,22 +170,39 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
   </script>
   
   <style scoped>
+  .header {
+    display:flex;
+    justify-content:space-between;
+    background-color: lightskyblue;
+    padding: 10px;
+    color: white;
+    width: 100%;
+    margin-bottom:3%;
+  }
   .admin-home-page {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    /* padding-top: 1rem; */
   }
   
   .search-container {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
     max-width: 600px;
     margin-bottom: 1rem;
+    background-color: white;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin:  0rem auto 2rem auto;
   }
+
   
   .search-input {
     flex-grow: 1;
@@ -183,6 +211,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
     border-radius: 4px;
     font-size: 1rem;
     margin-right: 0.5rem;
+    width:100%;
   }
   
   .search-button {
@@ -203,6 +232,19 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
   .search-results {
     display: flex;
     flex-direction: column;
+    
+    align-items: center;
+    justify-content: center;
+    
+    min-height:20vh;
+    
+    margin-bottom: 1rem;
+    background-color: white;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin:  0rem auto 2rem auto;
   }
 
   table {
@@ -215,6 +257,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+
   }
 
   th {
@@ -247,5 +290,27 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
     background-color: #6d61c8;
     border-color: #000000;
   }
+
+ 
+  .background {
+  background-image: url('../assets/after-login-page.jpg');
+  background-position:center ;
+  background-repeat: no-repeat;
+  background-size:cover;
+  min-height:100vh;
+  }
+
+  #admin-header{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  cursor: pointer;
+  padding: 10px 0px 10px 20px;
+  margin-left:3%;
+}
+
+
+
+
   </style>
   

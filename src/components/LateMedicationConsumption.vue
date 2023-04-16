@@ -1,7 +1,11 @@
 <template>
-    <div>
-      <p id = "averageTT"> Average Time Taken: {{ averageTimeTaken }} min</p>
-      <p id = "lateConsumption"> Missed Medications: {{ lateConsumptions }}</p>
+		
+    <div class="stats">
+      <h1>Statistics</h1>	
+      <p id = "averageTT"> Average Time Taken: 
+				<span class="result">{{ averageTimeTaken }} min</span>	</p>
+      <p id = "lateConsumption"> Missed Medications: 
+				<span class="result">{{ lateConsumptions }}</span></p>
     </div>
 </template>
   
@@ -90,10 +94,12 @@
 
                     totalMissedCounts += missedCounts
 
+                    totalMissedCounts = Math.floor(totalMissedCounts)
+
                 });
 
-                document.getElementById("averageTT").innerHTML = "Average time taken to record consumption: " + total / counts + " min";
-                document.getElementById("lateConsumption").innerHTML = "Number of missed doses: " + totalMissedCounts;
+                document.getElementById("averageTT").innerHTML = "Average time taken to record consumption for current regimes: " + total / counts + " min";
+                document.getElementById("lateConsumption").innerHTML = "Number of missed doses for current regimes: " + totalMissedCounts;
 
             }
 
@@ -161,4 +167,34 @@
 
     };
 </script>
+
+<style scoped>
+.result {
+	color:black;
+}
+p{
+  font-size:18px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-weight:bold;
+	color:darkblue;
+	padding:10px;
+}
+
+h1{
+	font-size:40px;
+	padding:10px;
+}
+.stats {
+	display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius:10px;
+  margin: 2rem auto; 
+  background-color:white;
+	max-width:400px;
+}
+</style>
   

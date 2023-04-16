@@ -1,5 +1,6 @@
 <template>
     <div class = "screenings"> 
+        
         <div id = "screening_reco">
             <h1>Screening Recommendations</h1><br>
             <table id = "recommendations" class = "auto-index">
@@ -174,6 +175,8 @@ export default {
 <style>
 h1 {
     text-align: center;
+    color:black;
+    font-size:40px;
 }
 table {
     font-family: arial, sans-serif;
@@ -183,17 +186,32 @@ table {
     text-align: center;
     width: auto;
 }
-.screenings{
-    background-color: rgb(132, 241, 132);
-    border-radius: 20px;
-    border-width: 3px;
-    border-color: black;
-    border-style: solid;
-    width: 50%;
-    text-align: center;
-    margin: 50px auto 50px auto;
-}
 #screening_reco{
-    padding: 10px;
+    background-color: white;
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: #ccc;
+    border-style: solid;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 40%;
+    text-align: center;
+    margin: 0px auto 50px auto;
+    padding: 20px;
 }
+/* #screening_reco{
+    padding: 10px;
+} */
+
+th {
+    color:darkblue;
+    padding:10px 20px 10px 20px;
+    font-size:20px;
+}
+#recommendations td {
+    padding: 10px;
+    font-size:18px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight:500;
+}
+
 </style>

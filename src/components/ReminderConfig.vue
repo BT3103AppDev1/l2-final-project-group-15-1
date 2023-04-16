@@ -1,23 +1,31 @@
 <template>
     <div class ="container">
         <form id="myform" onsubmit="return false">
-            <h2>Add/Edit Medication</h2>
-
+        
             <div class = "formli">
-                <label for = "medication">Medication:</label>    
-                <input type = "text" id = "medication" required = "" placeholder = "Enter your Medication name"> <br><br>
+                <h1>Add/Edit Medication</h1>
+                <div class ='formpart'>
+                    <label for = "medication">Medication:</label>    
+                    <input type = "text" id = "medication" required = "" placeholder = "Enter your Medication name" size="30"> <br><br>
+                </div>
 
-                <label for = "dosage">Dosage:</label>    
-                <input type = "text" id = "dosage" required = "" placeholder = "Dosage (include metric, eg. ml, cups...)"> <br><br>
+                <div class ='formpart'>
+                    <label for = "dosage">Dosage:</label>    
+                    <input type = "text" id = "dosage" required = "" placeholder = "Enter Dosage:(ml, cups)" size="30"> <br><br>
+                </div>
 
-                <label for = "frequency">Frequency:</label>    
-                <input type = "text" id = "frequency" required = "" placeholder = "Frequency (e.g. Daily, Weekly, Monthly...)"> <br><br>
+                <div class ='formpart'>
+                    <label for = "frequency">Frequency:</label>    
+                    <input type = "text" id = "frequency" required = "" placeholder = "Enter Frequency:(Times per day)" size="30"> <br><br>
+                </div>
 
-                <label for = "reminders">Reminders:</label>    
-                <input type = "text" id = "reminders" required = "" placeholder = "Duration between Doses: (HH:SS format)"> <br><br>
-
+                <div class ='formpart'>
+                    <label for = "reminders">Reminders:</label>    
+                    <input type = "text" id = "reminders" required = "" placeholder = "Enter Reminder times:(HH:SS) Format" size="30"> <br><br>
+                </div>
+                
                 <div class = "edit_medication" >
-                    <button id = "edit_button" v-on:click="editMedication">Add/Edit Medication</button>
+                    <button id = "edit_button" v-on:click="editMedication">Save Changes</button>
                 </div>
             </div>
         </form>
@@ -30,7 +38,7 @@
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, getDoc, doc, deleteDoc, query, where, setDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 // const userId = 'johndoe@gmail.com';
@@ -126,6 +134,84 @@ export default {
   // your component logic here
 }
 </script>
+
+<style scoped>
+
+input {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    
+    font-size: 16px;
+}
+
+input.active {
+  border-color: #007bff;
+  transform: scale(1.1);
+}
+
+h1{
+    font-size:40px;
+}
+
+label{
+    font-size:18px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-weight:bold;
+	color:darkblue;
+	
+}
+.container {
+    display:flex;
+    justify-content:center;
+    background-color: white;
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: #ccc;
+    border-style: solid;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 40%;
+    text-align: center;
+    margin: 50px auto 50px auto;
+    padding: 20px;
+}
+
+.formpart {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom:5%;
+  margin-right:5%;
+  margin-left:10%;
+}
+
+label {
+  margin-right: 10px;
+}
+
+button {
+  cursor:pointer;
+  background-color: rgb(75, 255, 75); 
+  padding:6px;
+  margin-left:10px;
+  border-radius:10px;
+  
+  box-shadow: 0 0 20px -20px;
+  color:black;
+}
+
+button:hover {
+  background-color: lightgreen;
+  box-shadow: 0px 0px 20px -18px;
+  border: 2.5px solid lightgreen;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+</style>
 
 
   

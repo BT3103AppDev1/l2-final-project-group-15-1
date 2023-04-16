@@ -3,11 +3,11 @@
         <form class="login">
 
             <p class="login-register">
-                Don't have an account?
+                <h3>Don't have an account?</h3><br>
                 <router-link class="router-link" :to="{ name: 'Register' }">Register</router-link>
             </p>
 
-            <h2> Login to PillPal </h2>
+            <h2 id="title"> Login to PillPal </h2>
 
             <div class="inputs">
 
@@ -19,7 +19,7 @@
                     <input type="password" placeholder="Password" v-model="password" />
                 </div>
 
-                <br>
+                
 
                 <div v-show="error" class="error">{{ this.errorMsg }} </div>
 
@@ -27,16 +27,18 @@
 
             <br>
 
-            <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }">Forgot your password?</router-link>
+            <button @click.prevent="login" id="login-button"> Login </button>
 
             <br>
 
-            <button @click.prevent="login"> Login </button>
+            <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }">Forgot your password?</router-link>
+
+            
 
             <div class="angle"></div>
         </form>
 
-        <div class="background"></div>
+        
 
     </div>
 </template>
@@ -74,15 +76,28 @@ export default {
                     this.errorMsg = "User has not been registered"
                     this.error = true;
                 } else {
-                    try {
-                        const signedUser = await signInWithEmailAndPassword(auth, current_email, current_pw)
-                        const user = signedUser
-                        this.$router.push({ name: "HomePage" });
-                        this.error = false;
-                        this.errorMsg = "";
-                    } catch (err) {
-                        this.errorMsg = "Invalid password Entered";
-                        this.error = true;
+                    if (current_email.startsWith("admin")) {
+                        try {
+                            const signedUser = await signInWithEmailAndPassword(auth, current_email, current_pw)
+                            const user = signedUser
+                            this.$router.push({ name: "AdminPage" });
+                            this.error = false;
+                            this.errorMsg = "";
+                        } catch (err) {
+                            this.errorMsg = "Invalid password Entered";
+                            this.error = true;
+                        }
+                    } else {
+                        try {
+                            const signedUser = await signInWithEmailAndPassword(auth, current_email, current_pw)
+                            const user = signedUser
+                            this.$router.push({ name: "HomePage" });
+                            this.error = false;
+                            this.errorMsg = "";
+                        } catch (err) {
+                            this.errorMsg = "Invalid password Entered";
+                            this.error = true;
+                        }
                     }
                 }
             }
@@ -92,21 +107,37 @@ export default {
 </script>
   
 <style lang="scss">
+* {
+    margin:0;
+    padding:0;
+}
+
+.login-register {
+  display: flex;
+  
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius:10px;
+  margin: 2rem;
+  background-color:white;
+}
 .form-wrap {
-    background: repeating-linear-gradient(rgba(240, 235, 244, 1),
-            rgba(161, 195, 209, 0.75),
-            rgba(241, 114, 161, 0.5));
+    background-image: url('../assets/background-registration.jpg');
+    background-position:center;
+    background-repeat: no-repeat;
+    background-size:cover;
     overflow: hidden;
     display: flex;
     height: 100vh;
     justify-content: center;
     align-self: center;
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
 
-    @media(min-width: 900px) {
-        width: 100%;
-    }
+    
 
     .login-register {
         margin-bottom: 32px;
@@ -125,9 +156,7 @@ export default {
         align-items: center;
         flex: 1;
 
-        @media(min-width:900px) {
-            padding: 0 50px;
-        }
+        
 
         h2 {
             text-align: center;
@@ -135,9 +164,7 @@ export default {
             color: #303030;
             margin-bottom: 40px;
 
-            @media(min-width: 900px) {
-                font-size: 40px;
-            }
+            
         }
 
         .inputs {
@@ -150,12 +177,13 @@ export default {
                 justify-content: center;
                 align-items: center;
                 margin-bottom: 8px;
+                
 
                 input {
                     width: 100%;
                     border: none;
                     background-color: #f2f7f6;
-                    padding: 4px 4px 4px 30px;
+                    // padding: 4px 4px 4px 30px;
                     height: 50px;
 
                     &:focus {
@@ -185,10 +213,55 @@ export default {
                 border-color: #303030;
             }
         }
+
+        .forgot-password:hover{
+            font-size:120%;
+        }
     }
 }
 
 .error {
     text-align: center;
 }
+
+.router-link:hover{
+    font-size:120%;
+    transition: 0.5s ease all;
+    
+}
+
+#title{
+    font-size:40px;
+}
+
+#login-button {
+ background-color: #eee;
+ border: none;
+ padding: 1rem;
+ font-size: 1rem;
+ width: 5em;
+ border-radius: 1rem;
+ color: green;
+ box-shadow: 0 0.4rem #dfd9d9;
+ cursor: pointer;
+}
+
+#login-button:active {
+ color: white;
+ box-shadow: 0 0.2rem #dfd9d9;
+ transform: translateY(0.2rem);
+}
+
+#login-button:hover {
+ background: lightgreen;
+ color: white;
+ text-shadow: 0 0.1rem #bcb4b4;
+}
+
+.error{
+    font-weight:600;
+    color:darkred;
+}
+
+
 </style>

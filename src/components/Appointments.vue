@@ -9,17 +9,17 @@
 
 <script>
 import firebaseApp from '../firebase.js';
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs } from "firebase/firestore";
 
 export default {
     mounted() {
-        async function display() {
+        async function display(USERID) {
             const db = getFirestore(firebaseApp);
-            const auth = getAuth(firebaseApp);
-            const user = auth.currentUser;
-            const USERID = user.email;
+            // const auth = getAuth(firebaseApp);
+            // const user = auth.currentUser;
+            // const USERID = user.email;
 
             let allDocuments = await getDocs(collection(db, "PillPal", USERID, "Appointments"))
             let index = 0
@@ -46,14 +46,30 @@ export default {
                 appts.innerHTML = "You currently have no scheduled appointments."
             }
         }
-        display()
+
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                display(user.email)
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
     } 
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
     text-align: center;
+    padding: 20px;
+    font-size:40px;
+}
+
+h3{
+    color:darkblue;
 }
 #appointment_table {
     font-family: arial, sans-serif;
@@ -64,16 +80,17 @@ h1 {
     border-collapse: separate;
 }
 .home_appointments{
-    display: inline-block;
-    background-color: rgb(132, 241, 132);
+    
+    background-color: white;
     border-radius: 20px;
-    border-width: 3px;
-    border-color: black;
+    border-width: 2px;
+    border-color: #ccc;
     border-style: solid;
-    width: 30%;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 40%;
     text-align: center;
     margin: 50px auto 50px auto;
-    padding: 10px
+    min-height: 200px;
 }
 
 </style>

@@ -105,29 +105,33 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
     text-align: center;
+		color: darkblue;
+		font-size:40px;
 }
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
+    text-align: left;
     border-collapse: separate;
     border-spacing: 20px 0;
 }
 tr, td {
     padding: 10px;
+    
 }
 .particulars{
-    background-color: rgb(132, 241, 132);
+    background-color: white;
     border-radius: 20px;
-    border-width: 3px;
-    border-color: black;
+    border-width: 2px;
+    border-color: #ccc;
     border-style: solid;
-    width: 50%;
+		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 40%;
     text-align: center;
     margin: 50px auto 50px auto;
 }
@@ -139,7 +143,8 @@ h3{
     width: 100%;
 }
 #screening_particulars{
-    padding: 10px;
+    padding: 5px;
+	margin:10px;
 }
 
 </style>

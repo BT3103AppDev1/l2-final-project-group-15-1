@@ -2,13 +2,13 @@
     <div class="footer" >
       <div class="content">
         <div class="information">
-          <div class="heading"><h1> PillPal </h1></div>
+          <div id="heading"><h1> PillPal </h1></div>
           <span class="copyright"> © 2023 PillPal All Rights Reserved.</span>
         </div>
         <div class="container">
           <div class="column">
             <span class="header">Any questions? Feel free to contact us!</span>
-            <span class="email">Email: PillPal@gmail.com</span>
+            <span class="email">Email: pillpalteam@gmail.com</span>
           </div>
         </div>
       </div>
@@ -36,7 +36,8 @@
   .information *, .container *{
     margin:10px;
   }
-  .heading {
+  
+  #heading {
     gap: var(--dl-space-space-unit);
     flex: 0 0 auto;
     width: 100%;
@@ -45,6 +46,7 @@
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
+    color:white;
   }
   .container {
     display: flex;

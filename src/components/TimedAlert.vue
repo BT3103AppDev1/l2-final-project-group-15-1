@@ -50,7 +50,7 @@
 
                     allDocuments.forEach((docs) => {
 
-                        let row = table.insertRow(index)
+                        // let row = table.insertRow(index)
 
                         let documentData = docs.data()
                         
@@ -104,7 +104,7 @@
                     
 
                 } else {
-                    dict = {"delay" : 0, "message" : "No ongoing medication regimes"}
+                    dict = {"delay" : -2, "message" : "No ongoing medication regimes"}
                 }
 
                 return dict
@@ -116,19 +116,28 @@
                 
                 var dict = await setTimedAlert(userId)
 
-                console.log(dict["delay"])
+                // console.log(dict["delay"])
 
                 setTimeout(() => {
 
                     // this.show = true;
                     if (dict["delay"] == -1) {
-                        alert("You have yet to take your medications.")
+                        if (window.location.href.endsWith("/overview")) {
+                            alert("Please take your medication and record them below.")
+                        } else {
+                            var result = confirm(dict["message"] + ".\nDo you want to record your comsumption now?")
+                            if (result) {
+                                window.location.href = "/overview"
+                            } 
+                        }
+                    } else if (dict["delay"] == -2) {
+                            // alert(dict["message"])
                     } else {
-                        var result = confirm(dict["message"] + ".\n" + "Do you wish refresh this page?")
+                        var result = confirm(dict["message"] + ".\nDo you want to record your comsumption now?")
                         if (result) {
-                            location.reload()
+                            window.location.href = "/overview"
                         } 
-                    }
+                    } 
                 }, dict["delay"]);
 
             }
