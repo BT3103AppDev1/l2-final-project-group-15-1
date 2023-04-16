@@ -120,10 +120,10 @@ table {
     border-color: #ccc;
     border-style: solid;
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-    width: 40%;
+    width: 80%;
     text-align: center;
     margin: 50px auto 50px auto;
-		padding:20px;
+	padding:20px;
 }
 
 h3{
