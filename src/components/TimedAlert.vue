@@ -125,7 +125,7 @@
                         if (window.location.href.endsWith("/overview")) {
                             alert("Please take your medication and record them below.")
                         } else {
-                            var result = confirm(dict["message"] + ".\nDo you want to record your comsumption now?")
+                            var result = confirm(dict["message"] + ".\nDo you want to record your consumption now?")
                             if (result) {
                                 window.location.href = "/overview"
                             } 
