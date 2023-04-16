@@ -74,15 +74,28 @@ export default {
                     this.errorMsg = "User has not been registered"
                     this.error = true;
                 } else {
-                    try {
-                        const signedUser = await signInWithEmailAndPassword(auth, current_email, current_pw)
-                        const user = signedUser
-                        this.$router.push({ name: "HomePage" });
-                        this.error = false;
-                        this.errorMsg = "";
-                    } catch (err) {
-                        this.errorMsg = "Invalid password Entered";
-                        this.error = true;
+                    if (current_email.startsWith("admin")) {
+                        try {
+                            const signedUser = await signInWithEmailAndPassword(auth, current_email, current_pw)
+                            const user = signedUser
+                            this.$router.push({ name: "AdminPage" });
+                            this.error = false;
+                            this.errorMsg = "";
+                        } catch (err) {
+                            this.errorMsg = "Invalid password Entered";
+                            this.error = true;
+                        }
+                    } else {
+                        try {
+                            const signedUser = await signInWithEmailAndPassword(auth, current_email, current_pw)
+                            const user = signedUser
+                            this.$router.push({ name: "HomePage" });
+                            this.error = false;
+                            this.errorMsg = "";
+                        } catch (err) {
+                            this.errorMsg = "Invalid password Entered";
+                            this.error = true;
+                        }
                     }
                 }
             }
