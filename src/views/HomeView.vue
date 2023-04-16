@@ -154,7 +154,7 @@ export default {
   align-items: center;
   flex-direction: row;
   background-size: cover;
-  background-image: url("http://public.safetybase.co.nz/wp-content/uploads/2013/07/iStock-512489412.jpg");
+  background-image: url("../components/landing-page.jpg");
 }
 .box2 * {
   margin:10px;
