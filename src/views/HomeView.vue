@@ -154,7 +154,7 @@ export default {
   align-items: center;
   flex-direction: row;
   background-size: cover;
-  background-image: url("../components/landing-page.jpg");
+  background-image: url("../assets/landing-page.jpg");
 }
 .box2 * {
   margin:10px;
