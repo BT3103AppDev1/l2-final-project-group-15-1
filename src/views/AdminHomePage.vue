@@ -73,28 +73,6 @@ import LogOutButton from '../components/LogOutButton.vue';
 
     methods: {
 
-        // async searchPatients() {
-        //   // Get Firestore reference
-        //   const db = getFirestore(firebaseApp);
-        //   const usersRef = collection(db, "PillPal");
-
-        //   // Retrieve all documents
-        //   const querySnapshot = await getDocs(usersRef);
-
-        //   // Filter documents based on the search term
-        //   const searchTermLowerCase = this.searchTerm.toLowerCase(); // convert search input text to lowercase
-        //   this.searchResults = querySnapshot.docs
-        //     .filter(doc => doc.id.toLowerCase().includes(searchTermLowerCase)) // match lowercase document ID (user email) with searchTermLowerCase
-        //     .map(doc => {
-        //       return {
-        //         name: doc.data().Name, // retrieve 'Name' field from document
-        //         email: doc.id, // document ID is the user email
-        //         medicalConditions: doc.data().Medical_Conditions,
-        //         punctuality: doc.id
-        //       };
-        //     });
-        // },
-
         async searchPatients() {
 
           const auth = getAuth(firebaseApp);
@@ -128,17 +106,17 @@ import LogOutButton from '../components/LogOutButton.vue';
                   const medicationRegimeSnapshot = await getDocs(medicationRegimeRef);
 
                   let totalNumbers = 0;
-                  let numbersAbove60 = 0;
+                  let numbersBelow60 = 0;
 
                   // Iterate through the MedicationRegime documents and calculate punctuality
                   medicationRegimeSnapshot.forEach((medicationRegimeDoc) => {
                     const lag = medicationRegimeDoc.data().Lag || []; // get the 'Lag' field
 
                     totalNumbers += lag.length;
-                    numbersAbove60 += lag.filter(number => number > 60).length;
+                    numbersBelow60 += lag.filter(number => number <= 60).length;
                   });
 
-                  const punctuality = totalNumbers > 0 ? formatPercentage((numbersAbove60 / totalNumbers) * 100) + "%" : "No Medication";
+                  const punctuality = totalNumbers > 0 ? formatPercentage((numbersBelow60 / totalNumbers) * 100) + "%" : "No Medication";
                   const bmi = (userData.Weight / ((userData.Height/100) ** 2)).toFixed(2);
                   const result = isNaN(bmi) ? "Not Specified" : bmi;
                   searchResults.push({
@@ -256,7 +234,7 @@ import LogOutButton from '../components/LogOutButton.vue';
   td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    text-align: center;
 
   }
 
@@ -265,6 +243,7 @@ import LogOutButton from '../components/LogOutButton.vue';
     padding-bottom: 12px;
     background-color: #f2f2f2;
     color: black;
+    text-align: center;
   }
 
   td:last-child {
@@ -287,7 +266,7 @@ import LogOutButton from '../components/LogOutButton.vue';
   }
 
   .user-profile-button:hover {
-    background-color: #6d61c8;
+    background-color: #8980ad;
     border-color: #000000;
   }
 
@@ -308,9 +287,8 @@ import LogOutButton from '../components/LogOutButton.vue';
   padding: 10px 0px 10px 20px;
   margin-left:3%;
 }
-
-
-
-
+  tr:hover {
+      background-color: #f5f5f5;
+  }
   </style>
   
