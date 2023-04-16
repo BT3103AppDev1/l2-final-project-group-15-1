@@ -19,12 +19,19 @@
 </script>
 
 <template>
-    <div class="background">
-      <h1></h1>
-      <br>
-      <HomeParticulars /><Appointments /><UpcomingReminders /><TimedAlert />
+  <div class="background">
+      <div class="content">
+      <div class="left-panel">
+        <HomeParticulars />
+      </div>
+      <div class="right-panel">
+        <UpcomingReminders />
+        <Appointments />
+      </div>
+      </div>
+    <TimedAlert />
       <!-- rest of the content -->
-    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -36,5 +43,21 @@
   background-size:cover;
   min-height:100vh;
 
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-panel {
+  flex-basis: 50%;
+}
+
+.right-panel {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>
