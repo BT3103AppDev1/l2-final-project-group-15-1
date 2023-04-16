@@ -256,10 +256,16 @@ export default {
                     cell2.innerHTML = dosage;
                     cell3.innerHTML = frequency;
                     cell4.innerHTML = reminders;
+                    cell0.setAttribute("style", "font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;")
+                    cell1.setAttribute("style", "font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;")
+                    cell2.setAttribute("style", "font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;")
+                    cell3.setAttribute("style", "font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;margin:0 20px;")
+                    cell4.setAttribute("style", "font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;")
 
                     let takenButton = document.createElement("button")
                     takenButton.id = String(medication)
                     takenButton.classList.add()
+                    takenButton.setAttribute("style", "cursor:pointer;background-color: rgb(75, 255, 75); padding:6px;margin-left:10px;border-radius:10px;box-shadow: 0 0 20px -20px;color:black;")
 
 
 
@@ -316,7 +322,8 @@ export default {
                     deleteButton.id = String(medication)
                     deleteButton.className = "deleteButton"
                     deleteButton.innerHTML = "Delete"
-
+                    deleteButton.setAttribute("style", "cursor:pointer;background-color: red;padding:6px;border-radius:10px;box-shadow: 0 0 20px -20px;color:black;")
+                    deleteButton.style.color ='white'
                     
 
                     cell6.appendChild(deleteButton)

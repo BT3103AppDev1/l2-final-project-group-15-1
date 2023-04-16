@@ -3,11 +3,11 @@
         <form class="login">
 
             <p class="login-register">
-                Don't have an account?
+                <h3>Don't have an account?</h3><br>
                 <router-link class="router-link" :to="{ name: 'Register' }">Register</router-link>
             </p>
 
-            <h2> Login to PillPal </h2>
+            <h2 id="title"> Login to PillPal </h2>
 
             <div class="inputs">
 
@@ -19,7 +19,7 @@
                     <input type="password" placeholder="Password" v-model="password" />
                 </div>
 
-                <br>
+                
 
                 <div v-show="error" class="error">{{ this.errorMsg }} </div>
 
@@ -27,11 +27,13 @@
 
             <br>
 
-            <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }">Forgot your password?</router-link>
+            <button @click.prevent="login" id="login-button"> Login </button>
 
             <br>
 
-            <button @click.prevent="login"> Login </button>
+            <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }">Forgot your password?</router-link>
+
+            
 
             <div class="angle"></div>
         </form>
@@ -175,12 +177,13 @@ export default {
                 justify-content: center;
                 align-items: center;
                 margin-bottom: 8px;
+                
 
                 input {
                     width: 100%;
                     border: none;
                     background-color: #f2f7f6;
-                    padding: 4px 4px 4px 30px;
+                    // padding: 4px 4px 4px 30px;
                     height: 50px;
 
                     &:focus {
@@ -210,10 +213,55 @@ export default {
                 border-color: #303030;
             }
         }
+
+        .forgot-password:hover{
+            font-size:120%;
+        }
     }
 }
 
 .error {
     text-align: center;
 }
+
+.router-link:hover{
+    font-size:120%;
+    transition: 0.5s ease all;
+    
+}
+
+#title{
+    font-size:40px;
+}
+
+#login-button {
+ background-color: #eee;
+ border: none;
+ padding: 1rem;
+ font-size: 1rem;
+ width: 5em;
+ border-radius: 1rem;
+ color: green;
+ box-shadow: 0 0.4rem #dfd9d9;
+ cursor: pointer;
+}
+
+#login-button:active {
+ color: white;
+ box-shadow: 0 0.2rem #dfd9d9;
+ transform: translateY(0.2rem);
+}
+
+#login-button:hover {
+ background: lightgreen;
+ color: white;
+ text-shadow: 0 0.1rem #bcb4b4;
+}
+
+.error{
+    font-weight:600;
+    color:darkred;
+}
+
+
 </style>
