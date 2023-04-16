@@ -19,7 +19,7 @@
 
 <script>
 import firebaseApp from '../firebase.js';
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 import { getDoc, doc } from "firebase/firestore";
 
@@ -33,11 +33,11 @@ export default {
         },    
     },
     mounted() {
-        async function display() {
+        async function display(USERID) {
             const db = getFirestore(firebaseApp);
-            const auth = getAuth(firebaseApp);
-            const user = auth.currentUser;
-            const USERID = user.email;
+            // const auth = getAuth(firebaseApp);
+            // const user = auth.currentUser;
+            // const USERID = user.email;
             let index = 1
             const docRef = doc(db, "PillPal", USERID)
             const docSnap = await getDoc(docRef)
@@ -82,7 +82,18 @@ export default {
             }
             
         }
-        display()
+
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                display(user.email)
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+        
     } 
 }
 </script>
