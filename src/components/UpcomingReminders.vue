@@ -39,6 +39,7 @@ export default {
                         var today = new Date()
                         var timeFromLastDoseMS = (today.getTime() - lastTaken.getTime())
 
+
                         var hoursBetweenDoses = parseInt(reminder.split(":")[0])
                         var minutesBetweenDoses = parseInt(reminder.split(":")[1])
 
@@ -50,6 +51,9 @@ export default {
 
                             cell0.innerHTML = name;
                             cell1.innerHTML = time + " hrs";
+                            
+                            cell0.setAttribute("style", "padding: 0 10px; font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;");
+                            cell1.setAttribute("style", "padding: 0 10px; font-size:18px; font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:500;")
 
                             index += 1
                         } else {
@@ -68,6 +72,10 @@ export default {
                     // cell1.innerHTML = time + " hrs";
 
                     // index += 1
+
+                    
+                    
+
                 })
             } else {
                 let reminders = document.getElementById("upcoming_reminders")
@@ -93,16 +101,24 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+h1{
+    padding:20px;
+
+}
+
+
 .home_reminders{
-    background-color: rgb(132, 241, 132);
+    background-color: white;
     border-radius: 20px;
-    border-width: 3px;
-    border-color: black;
+    border-width: 2px;
+    border-color: #ccc;
     border-style: solid;
-    width: 30%;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 40%;
     text-align: center;
     margin: 50px auto 50px auto;
-    padding: 10px
+    min-height: 200px;
 }
 </style>

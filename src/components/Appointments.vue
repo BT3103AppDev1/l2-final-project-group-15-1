@@ -61,9 +61,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
     text-align: center;
+    padding: 20px;
+    font-size:40px;
+}
+
+h3{
+    color:darkblue;
 }
 #appointment_table {
     font-family: arial, sans-serif;
@@ -74,16 +80,17 @@ h1 {
     border-collapse: separate;
 }
 .home_appointments{
-    display: inline-block;
-    background-color: rgb(132, 241, 132);
+    
+    background-color: white;
     border-radius: 20px;
-    border-width: 3px;
-    border-color: black;
+    border-width: 2px;
+    border-color: #ccc;
     border-style: solid;
-    width: 30%;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 40%;
     text-align: center;
     margin: 50px auto 50px auto;
-    padding: 10px
+    min-height: 200px;
 }
 
 </style>

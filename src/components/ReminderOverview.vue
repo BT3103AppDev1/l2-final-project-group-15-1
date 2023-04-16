@@ -262,6 +262,7 @@ export default {
                     takenButton.classList.add()
 
 
+
                     if (checkbox) {
                         cell5.innerHTML = "Taken"
 
@@ -417,7 +418,7 @@ h1{
 		padding-bottom:50px;
 }
 
-.takenButton {
+button.takenButton {
   background-color: #4CAF50;
   border: none;
   color: white;

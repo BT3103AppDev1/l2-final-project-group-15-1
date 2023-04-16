@@ -98,9 +98,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
     text-align: center;
+    color:darkblue;
 }
 table {
     font-family: arial, sans-serif;
@@ -113,28 +114,44 @@ table {
     
 }
 .home_particulars{
-    background-color: rgb(132, 241, 132);
+    background-color: white;
     border-radius: 20px;
-    border-width: 3px;
-    border-color: black;
+    border-width: 2px;
+    border-color: #ccc;
     border-style: solid;
-    width: 30%;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 40%;
     text-align: center;
     margin: 50px auto 50px auto;
+		padding:20px;
 }
 
-.home_details{
+h3{
     text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
 }
 
-#update_particulars_button{
-    background-color: white;
-    margin: 10px;
-    padding: 3px;
+button {
+  margin-top:10px;
+  cursor:pointer;
+  background-color: rgb(75, 255, 75); 
+  padding:6px;
+  margin-left:10px;
+  border-radius:10px;
+  box-shadow: 0 0 20px -20px;
+  color:black;
 }
 
-#home_name {
-    padding-top: 10px;
+button:hover {
+  background-color: lightgreen;
+  box-shadow: 0px 0px 20px -18px;
+  border: 2.5px solid lightgreen;
+}
+
+button:active {
+  transform: scale(0.9);
 }
 
 </style>
