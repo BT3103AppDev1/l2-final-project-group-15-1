@@ -279,21 +279,31 @@ export default {
                             taken.push(Timestamp.fromDate(new Date()))
                             var lagMin = timeFromLastDose - minTimeBetweenDoses
                             lag.push(lagMin)
-                            if (lagMin <= 60) {
-                              updateDoc(doc(db, "PillPal", userId), {
-                                Reward_Points: increment(3),
-                              })
-                            }
+                            // if (lagMin <= 60) {
+                            //   updateDoc(doc(db, "PillPal", userId), {
+                            //     Reward_Points: increment(3),
+                            //   })
+                            // }
                         } else {
                             taken = new Array(Timestamp.fromDate(new Date()))
-                            lag = new Array()
-                            updateDoc(doc(db, "PillPal", userId), {
-                                // Reward_Points: increment(3),
-                              })
+                            // lag = new Array()
+                            // updateDoc(doc(db, "PillPal", userId), {
+                            //     Reward_Points: increment(3),
+                            //   })
                             // lag.push(0)
                         }
                         
                         takenButton.onclick = async function() {
+
+                          if (lag.length == 0) {
+                              await updateDoc(doc(db, "PillPal", userId), {
+                                Reward_Points: increment(3),
+                              })
+                            } else if (lag[lag.length - 1] <= 60) {
+                              await updateDoc(doc(db, "PillPal", userId), {
+                                Reward_Points: increment(3),
+                              })
+                            }
 
                             let takeMedication = { 
                                 Medication: medication,
