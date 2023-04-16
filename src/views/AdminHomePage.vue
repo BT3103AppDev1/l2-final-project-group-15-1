@@ -22,8 +22,9 @@
               <th>Patient Name</th>
               <th>Patient Email</th>
               <th>Medical Conditions</th>
+              <th>BMI</th>
               <th>Dosage Punctuality</th>
-              <th>User Account</th>
+              <th>Contact Patient</th>
             </tr>
           </thead>
           <tbody>
@@ -31,10 +32,11 @@
               <td>{{ user.name }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.medicalConditions }}</td>
+              <td>{{ user.bmi }}</td>
               <td>{{ user.punctuality }}</td>
               <td>
-                <button @click="openUserAccount(user.email)" class="user-profile-button">
-                  User Profile
+                <button @click="emailUser(user.email)" class="user-profile-button">
+                  Email
                 </button>
               </td>
           </tr>
@@ -48,6 +50,7 @@
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
   export default {
     data() {
@@ -82,59 +85,74 @@ import { getFirestore } from "firebase/firestore";
         // },
 
         async searchPatients() {
-          // Get Firestore reference
-          const db = getFirestore(firebaseApp);
-          const usersRef = collection(db, "PillPal");
 
-          // Retrieve all documents
-          const querySnapshot = await getDocs(usersRef);
+          const auth = getAuth(firebaseApp);
+          const user = auth.currentUser;
 
-          // Filter documents based on the search term
-          const searchTermLowerCase = this.searchTerm.toLowerCase(); // convert search input text to lowercase
-          const searchResults = [];
+          if (user) {
+            if (user.email === "admin@gmail.com") {
+              // Get Firestore reference
+              const db = getFirestore(firebaseApp);
+              const usersRef = collection(db, "PillPal");
 
-          function formatPercentage(value) {
-            const roundedValue = Math.round(value);
-            return (roundedValue === value) ? value : value.toFixed(2);
-          }
+              // Retrieve all documents
+              const querySnapshot = await getDocs(usersRef);
 
-          for (const doc of querySnapshot.docs) {
-            const userEmail = doc.id;
-            const userData = doc.data();
+              // Filter documents based on the search term
+              const searchTermLowerCase = this.searchTerm.toLowerCase(); // convert search input text to lowercase
+              const searchResults = [];
 
-            if (userEmail.toLowerCase().includes(searchTermLowerCase)) {
-              // Fetch data from the MedicationRegime subcollection
-              const medicationRegimeRef = collection(db, "PillPal", userEmail, "MedicationRegime");
-              const medicationRegimeSnapshot = await getDocs(medicationRegimeRef);
+              function formatPercentage(value) {
+                const roundedValue = Math.round(value);
+                return (roundedValue === value) ? value : value.toFixed(2);
+              }
 
-              let totalNumbers = 0;
-              let numbersAbove60 = 0;
+              for (const doc of querySnapshot.docs) {
+                const userEmail = doc.id;
+                const userData = doc.data();
 
-              // Iterate through the MedicationRegime documents and calculate punctuality
-              medicationRegimeSnapshot.forEach((medicationRegimeDoc) => {
-                const lag = medicationRegimeDoc.data().Lag || []; // get the 'Lag' field
+                if (userEmail.toLowerCase().includes(searchTermLowerCase)) {
+                  // Fetch data from the MedicationRegime subcollection
+                  const medicationRegimeRef = collection(db, "PillPal", userEmail, "MedicationRegime");
+                  const medicationRegimeSnapshot = await getDocs(medicationRegimeRef);
 
-                totalNumbers += lag.length;
-                numbersAbove60 += lag.filter(number => number > 60).length;
-              });
+                  let totalNumbers = 0;
+                  let numbersAbove60 = 0;
 
-              const punctuality = totalNumbers > 0 ? formatPercentage((numbersAbove60 / totalNumbers) * 100) + "%" : "No Medication";
+                  // Iterate through the MedicationRegime documents and calculate punctuality
+                  medicationRegimeSnapshot.forEach((medicationRegimeDoc) => {
+                    const lag = medicationRegimeDoc.data().Lag || []; // get the 'Lag' field
 
-              searchResults.push({
-                name: userData.Name, // retrieve 'Name' field from document
-                email: userEmail, // document ID is the user email
-                medicalConditions: userData.Medical_Conditions,
-                punctuality: punctuality
-              });
+                    totalNumbers += lag.length;
+                    numbersAbove60 += lag.filter(number => number > 60).length;
+                  });
+
+                  const punctuality = totalNumbers > 0 ? formatPercentage((numbersAbove60 / totalNumbers) * 100) + "%" : "No Medication";
+                  const bmi = (userData.Weight / ((userData.Height/100) ** 2)).toFixed(2);
+                  const result = isNaN(bmi) ? "Not Specified" : bmi;
+                  searchResults.push({
+                    name: userData.Name, // retrieve 'Name' field from document
+                    email: userEmail, // document ID is the user email
+                    medicalConditions: userData.Medical_Conditions,
+                    bmi: result,
+                    punctuality: punctuality
+                  });
+                }
+              }
+              this.searchResults = searchResults;
+            } else {
+              console.error('You do not have permission to do this.');
+              window.alert('You do not have permission to do this.');
             }
+          } else {
+            console.error('No user is currently logged in.');
+            window.alert('No user is currently logged in.');
           }
-
-          this.searchResults = searchResults;
         },
 
-        openUserAccount(userEmail) {
-            // Implement the logic to open the user's account
-            window.alert("gay");
+        emailUser(userEmail) {
+            const emailLink = `mailto:${encodeURIComponent(userEmail)}`;
+            window.open(emailLink, '_blank');
           },
         },
     };
