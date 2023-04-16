@@ -46,83 +46,83 @@
 </template>
 
 <script>
-import firebaseApp from '@/firebase.js';
-import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+    import firebaseApp from '@/firebase.js';
+    import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
+    import { getFirestore, doc, setDoc } from 'firebase/firestore';
 
-const db = getFirestore(firebaseApp);
-const auth = getAuth(firebaseApp);
+    const db = getFirestore(firebaseApp);
+    const auth = getAuth(firebaseApp);
 
-export default {
-    name: 'Register',
-    data() {
-        return {
-            email: '',
-            password: '',
-            reconfirmpassword: '',
-            error: false,
-            errorMsg: '',
-        };
-    },
-
-    // created() {
-    //     setTimeout(() => {
-    //         this.errorMsg = null;
-    //     }, 5000); // clear error message after 5 seconds
-    // },
-
-    methods: {
-        async clearForm() {
-            this.$refs.registerForm.reset();
+    export default {
+        name: 'Register',
+        data() {
+            return {
+                email: '',
+                password: '',
+                reconfirmpassword: '',
+                error: false,
+                errorMsg: '',
+            };
         },
 
-        async register() {
-            const current_email = this.email;
-            const current_pw = this.password;
-            const current_reconfirm_pw = this.reconfirmpassword;
-            if (current_pw !== current_reconfirm_pw) {
-                this.error = true;
-                this.errorMsg = "Password and Confirmed Password are not the same";
-            } else {
+        // created() {
+        //     setTimeout(() => {
+        //         this.errorMsg = null;
+        //     }, 5000); // clear error message after 5 seconds
+        // },
 
-                if (current_email.length === 0 || current_pw.length === 0 || current_reconfirm_pw.length === 0) {
+        methods: {
+            async clearForm() {
+                this.$refs.registerForm.reset();
+            },
+
+            async register() {
+                const current_email = this.email;
+                const current_pw = this.password;
+                const current_reconfirm_pw = this.reconfirmpassword;
+                if (current_pw !== current_reconfirm_pw) {
                     this.error = true;
-                    this.errorMsg = "Please fill out all fields";
+                    this.errorMsg = "Password and Confirmed Password are not the same";
                 } else {
-                    if (current_pw.length < 6) {
 
-                
-
+                    if (current_email.length === 0 || current_pw.length === 0 || current_reconfirm_pw.length === 0) {
                         this.error = true;
-                        this.errorMsg = "Please input at least 6 characters for your password";
+                        this.errorMsg = "Please fill out all fields";
                     } else {
-                        this.error = false;
-                        const numOfSignIn = await fetchSignInMethodsForEmail(auth, current_email)
-                        const result = numOfSignIn
-                        if (result.length === 0) {
-                            this.error = false;
-                            this.errorMsg = "";
-                            const createdUser = await createUserWithEmailAndPassword(auth, current_email, current_pw)
-                            const user = createdUser
-                            setDoc(doc(db, "PillPal", current_email), {
-                                email: current_email
-                            })
-                            setDoc(doc(db, "PillPal", current_email), {
-                            Reward_Points: 0
-                            })
+                        if (current_pw.length < 6) {
+
+                    
+
                             this.error = true;
-                            this.errorMsg = "User successfully created";
-                            this.clearForm();
+                            this.errorMsg = "Please input at least 6 characters for your password";
                         } else {
-                            this.error = true;
-                            this.errorMsg = "User has already been Registered";
+                            this.error = false;
+                            const numOfSignIn = await fetchSignInMethodsForEmail(auth, current_email)
+                            const result = numOfSignIn
+                            if (result.length === 0) {
+                                this.error = false;
+                                this.errorMsg = "";
+                                const createdUser = await createUserWithEmailAndPassword(auth, current_email, current_pw)
+                                const user = createdUser
+                                setDoc(doc(db, "PillPal", current_email), {
+                                    email: current_email
+                                })
+                                setDoc(doc(db, "PillPal", current_email), {
+                                Reward_Points: 0
+                                })
+                                this.error = true;
+                                this.errorMsg = "User successfully created";
+                                this.clearForm();
+                            } else {
+                                this.error = true;
+                                this.errorMsg = "User has already been Registered";
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 </script>
 
 <style scoped>
