@@ -1,12 +1,13 @@
 <template>
     <div class="heatmap-container">
-      <calendar-heatmap  :values = "heatmapData" :end-date= "new Date()" :round="5" :max="10" class="heatmap"/>
+      <calendar-heatmap  :values = "heatmapData" :end-date= "new Date()" :round="5" :max="10"  class="heatmap"/>
     </div>
   </template>
   
 
 <script>
 
+    import 'vue3-calendar-heatmap/dist/style.css'    
     import firebaseApp from '../firebase.js';
     import { getFirestore } from "firebase/firestore";
     import { collection, getDocs, getDoc, doc, deleteDoc, query, where, setDoc } from "firebase/firestore";
@@ -128,16 +129,16 @@
 
 <style scoped>
 .heatmap-container {
-  display: flex;
+  display:block;
   justify-content: center;
   flex-direction: column;
   border: 2px solid #ccc;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
   margin: 2rem auto;
   background-color: white;
-  max-width:80%;
+  max-width: 80%;
 }
 
 .heatmap text{
